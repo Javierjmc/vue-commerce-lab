@@ -1,23 +1,46 @@
-import { ShoppingCart, Store } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { getCartItemCount } from "@/lib/cart";
 import { useCart } from "@/hooks/useCart";
+import TickerOfertas from "./TickerOfertas";
+import logo from "../assets/logo-herbolario.png";
 
 const Navbar = () => {
   const { cart } = useCart();
   const itemCount = getCartItemCount(cart);
 
+  const navLinks = [
+    { name: "Inicio", to: "/" },
+    { name: "Nosotras", to: "/nosotras" },
+    { name: "Testimonios", to: "/testimonios" },
+    { name: "Tienda", to: "/tienda" },
+    { name: "Blog", to: "/blog" },
+  ];
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 transition-transform hover:scale-105">
-          <Store className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            TechStore
-          </span>
+      <TickerOfertas />
+      <div className="container flex h-20 items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="transition-transform hover:scale-105">
+          <img src={logo} alt="Logo" className="w-[220px]" />
         </Link>
 
+        {/* Links */}
+        <div className="hidden md:flex gap-6">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.to}
+              className="px-3 py-2 font-medium transition-colors hover:text-accent"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+
+        {/* Carrito */}
         <Link
           to="/cart"
           className="relative flex items-center gap-2 rounded-lg px-4 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
