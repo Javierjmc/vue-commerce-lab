@@ -23,7 +23,7 @@ const Index = () => {
     },
     {
       id: 2,
-      name: "Extracto Herbal Premium",
+      name: "Extracto Herbal",
       image: product2,
       price: "$18.99",
       rating: 4.9,
@@ -40,17 +40,37 @@ const Index = () => {
       reviews: 312,
       badge: "PACK",
     },
+    {
+      id: 4,
+      name: "Fibra Orgánica",
+      image: product3,
+      price: "$21.99",
+      originalPrice: "$26.99",
+      rating: 4.7,
+      reviews: 312,
+      badge: "PACK",
+    },
+    {
+      id: 5,
+      name: "Fibra Orgánica",
+      image: product3,
+      price: "$21.99",
+      originalPrice: "$26.99",
+      rating: 4.7,
+      reviews: 312,
+      badge: "PACK",
+    }, 
   ];
 
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
-          <div className="absolute inset-0 bg-black/70" />
+          <div className="absolute inset-0 bg-black/60" />
         </div>
         
         <div className="relative z-10 container mx-auto px-4 text-center text-primary-foreground">
@@ -124,9 +144,9 @@ const Index = () => {
               <h3 className="text-2xl font-bold">DESTACADO DE TEMPORADA</h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
               {products.map((product) => (
-                <Card key={product.id} className="overflow-hidden hover:shadow-hover transition-all duration-300 hover:scale-105 bg-card shadow-card">
+                <Card key={product.id} className="overflow-hidden bg-white hover:shadow-hover transition-all duration-300 hover:scale-105 bg-card shadow-card">
                   <div className="relative">
                     <img
                       src={product.image}

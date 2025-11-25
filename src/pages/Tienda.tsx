@@ -1,29 +1,47 @@
 import { useState, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import { products } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
 import { ShoppingBag } from "lucide-react";
 import Layout from "../layouts/Layout";
 
-const ITEMS_PER_PAGE = 8; // Número de productos por página
+const ITEMS_PER_PAGE = 8;
 
 const Tienda = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Obtener categorías únicas
+  const { search } = useLocation();
+  const searchQuery = new URLSearchParams(search).get("search")?.toLowerCase() || "";
+
+  // Categorías
   const categories = useMemo(() => {
     const cats = products.map((p) => p.category);
     return ["all", ...new Set(cats)];
   }, []);
 
-  // Filtrar productos por categoría
+  // FILTRO PRINCIPAL: por categoría + por búsqueda
   const filteredProducts = useMemo(() => {
-    if (selectedCategory === "all") return products;
-    return products.filter((p) => p.category === selectedCategory);
-  }, [selectedCategory]);
+    let result = products;
+
+    // Filtrar por categoría
+    if (selectedCategory !== "all") {
+      result = result.filter((p) => p.category === selectedCategory);
+    }
+
+    // Filtrar por búsqueda
+    if (searchQuery) {
+      result = result.filter((p) =>
+        p.name.toLowerCase().includes(searchQuery)
+      );
+    }
+
+    return result;
+  }, [selectedCategory, searchQuery]);
 
   // Paginación
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+
   const paginatedProducts = useMemo(() => {
     const start = (currentPage - 1) * ITEMS_PER_PAGE;
     return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
@@ -32,29 +50,17 @@ const Tienda = () => {
   return (
     <Layout>
       <main className="container py-8">
-        {/* Banner */}
-        <div className="mb-8 text-center animate-fade-in">
-          <div className="mb-4 flex justify-center">
-            <div className="rounded-full bg-primary/10 p-3 shadow-card">
-              <ShoppingBag className="h-8 w-8 text-primary" />
-            </div>
-          </div>
-          <h1 className="mb-2 text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Bienvenido a Herbolario Vitasfera
-          </h1>
-          <p className="text-lg text-secondary-foreground">
-            Los mejores productos tecnológicos al mejor precio
-          </p>
-        </div>
 
-        {/* Filtros por categoría */}
+
+
+        {/* Categorías */}
         <div className="mb-6 flex justify-center gap-3 flex-wrap">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => {
                 setSelectedCategory(cat);
-                setCurrentPage(1); // Resetear a la primera página al cambiar categoría
+                setCurrentPage(1);
               }}
               className={`px-4 py-2 rounded-full border border-border ${
                 selectedCategory === cat
@@ -67,7 +73,14 @@ const Tienda = () => {
           ))}
         </div>
 
-        {/* Productos */}
+        {/* Si no hay productos */}
+        {filteredProducts.length === 0 && (
+          <p className="text-center text-lg text-muted-foreground mt-10">
+            No se encontraron productos que coincidan con la búsqueda.
+          </p>
+        )}
+
+        {/* Lista de productos */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {paginatedProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
@@ -84,9 +97,9 @@ const Tienda = () => {
             >
               Anterior
             </button>
-            <span>
-              {currentPage} / {totalPages}
-            </span>
+
+            <span>{currentPage} / {totalPages}</span>
+
             <button
               onClick={() =>
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))

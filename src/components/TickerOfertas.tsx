@@ -15,7 +15,7 @@ const TickerOfertas = () => {
   }, []);
 
   return (
-    <div className="overflow-hidden whitespace-nowrap bg-gradient-to-r from-[#09573c] via-[#4fac05] to-[#2e901f] text-white font-bold py-6">
+    <div className="overflow-hidden whitespace-nowrap bg-gradient-to-r from-[#09573c] via-[#4fac05] to-[#2e901f] text-white font-bold py-3">
       <div
         ref={tickerRef}
         className="inline-block animate-scroll"
