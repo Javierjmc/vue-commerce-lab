@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import { products } from "@/lib/products";
+import { ListaProductos, ProductoNutricional } from "@/lib/productos";
 import ProductCard from "@/components/ProductCard";
 import { ShoppingBag } from "lucide-react";
 import Layout from "../layouts/Layout";
@@ -16,23 +16,23 @@ const Tienda = () => {
 
   // Categorías
   const categories = useMemo(() => {
-    const cats = products.map((p) => p.category);
+    const cats = ListaProductos.map((p) => p.categoriaPorPatologia);
     return ["all", ...new Set(cats)];
   }, []);
 
   // FILTRO PRINCIPAL: por categoría + por búsqueda
   const filteredProducts = useMemo(() => {
-    let result = products;
+    let result = ListaProductos;
 
     // Filtrar por categoría
     if (selectedCategory !== "all") {
-      result = result.filter((p) => p.category === selectedCategory);
+      result = result.filter((p) => p.categoriaPorPatologia === selectedCategory);
     }
 
     // Filtrar por búsqueda
     if (searchQuery) {
       result = result.filter((p) =>
-        p.name.toLowerCase().includes(searchQuery)
+        p.producto.toLowerCase().includes(searchQuery)
       );
     }
 

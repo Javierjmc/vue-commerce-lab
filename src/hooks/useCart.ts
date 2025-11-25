@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Product } from "@/lib/products";
+import { ProductoNutricional } from "@/lib/productos";
 import { CartItem, cartStorage } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
 
@@ -10,7 +10,7 @@ export const useCart = () => {
     setCart(cartStorage.get());
   }, []);
 
-  const addToCart = (product: Product, quantity: number = 1) => {
+  const addToCart = (product: ProductoNutricional, quantity: number = 1) => {
     setCart((currentCart) => {
       const existingItem = currentCart.find((item) => item.id === product.id);
       
@@ -23,13 +23,21 @@ export const useCart = () => {
         );
         toast({
           title: "Actualizado",
-          description: `${product.name} actualizado en el carrito`,
+          description: `${product.producto} actualizado en el carrito`,
         });
       } else {
-        newCart = [...currentCart, { ...product, quantity }];
+        newCart = [...currentCart, { 
+          ...product, 
+          quantity, 
+          image: product.imagenes[0], // Asegura que la imagen se añada correctamente
+          name: product.producto, // Añadir propiedad 'name'
+          price: parseFloat(product.pvp.replace("€", "").replace(",", ".")),
+          category: product.categoriaPorPatologia,
+          stock: 999 // Asumo un stock temporal
+        }];
         toast({
           title: "Añadido al carrito",
-          description: `${product.name} añadido correctamente`,
+          description: `${product.producto} añadido correctamente`,
         });
       }
       
@@ -40,7 +48,7 @@ export const useCart = () => {
 
   const removeFromCart = (productId: string) => {
     setCart((currentCart) => {
-      const newCart = currentCart.filter((item) => item.id !== productId);
+      const newCart = currentCart.filter((item) => item.id.toString() !== productId);
       cartStorage.set(newCart);
       toast({
         title: "Eliminado",
@@ -55,7 +63,7 @@ export const useCart = () => {
     
     setCart((currentCart) => {
       const newCart = currentCart.map((item) =>
-        item.id === productId ? { ...item, quantity } : item
+        item.id.toString() === productId ? { ...item, quantity } : item
       );
       cartStorage.set(newCart);
       return newCart;

@@ -8,6 +8,7 @@ import product2 from "@/assets/product-2.jpg";
 import product3 from "@/assets/product-3.jpg";
 import Layout from "@/layouts/Layout";
 import { Link } from "react-router-dom";
+import { ListaProductos } from "../lib/productos";
 
 const Index = () => {
   const products = [
@@ -61,6 +62,8 @@ const Index = () => {
       badge: "PACK",
     }, 
   ];
+
+  console.log(ListaProductos);
 
   return (
     <Layout>

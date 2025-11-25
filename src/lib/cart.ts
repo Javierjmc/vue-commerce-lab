@@ -1,7 +1,8 @@
-import { Product } from "./products";
+import { ProductoNutricional } from "./productos";
 
-export interface CartItem extends Product {
+export interface CartItem extends ProductoNutricional {
   quantity: number;
+  image: string; // Añadir la propiedad de imagen al CartItem
 }
 
 const CART_STORAGE_KEY = "ecommerce_cart";
