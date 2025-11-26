@@ -1,9 +1,19 @@
+import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Heart, Target, Users, ChevronDown, Eye } from "lucide-react";
 import team1 from "@/assets/team-1.jpg";
 import team2 from "@/assets/team-2.jpg";
 import Layout from "@/layouts/Layout";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { FAQ_DATA } from "@/lib/faqs";
+// Eliminada la importación de '@react-google-maps/api'
 
 const Nosotras = () => {
   const values = [
@@ -26,27 +36,26 @@ const Nosotras = () => {
 
   const team = [
     {
-      name: "Sandra García",
+      name: "Sandra",
       role: "Nutricionista Principal",
       image: team1,
-      bio: "Con más de 15 años de experiencia en nutrición holística, Sandra lidera nuestro equipo con pasión y dedicación al bienestar integral.",
+      bio: "Hola, soy Sandra, naturópata, y mi misión es acompañarte en tu viaje personal hacia la salud y el bienestar.",
+      fullDescription: "Hola, soy Sandra, naturópata, y mi misión es acompañarte en tu viaje personal hacia la salud y el bienestar. Utilizo la kinesiología y las Flores de Bach para ayudarte a conectar con tu cuerpo y a manejar el estrés y la ansiedad. Con un enfoque en la nutrición naturista, te enseño a usar los alimentos como medicina, fortaleciendo tu cuerpo de forma inteligente. Mi objetivo es que te sientas mejor, más fuerte y en control de tu bienestar. Si estás listo para empezar, estoy aquí para guiarte en cada paso.",
+      certificaciones: ["Máster en Nutrición Holística", "Certificación en Fitoterapia", "Especialista en Microbiota Intestinal"],
+      redesSociales: { instagram: "#", linkedin: "#" },
     },
     {
-      name: "María Rodríguez",
+      name: "Laura",
       role: "Coach de Bienestar",
       image: team2,
-      bio: "Especialista en transformación de hábitos y estilo de vida saludable. María acompaña a cada cliente en su viaje hacia el bienestar.",
+      bio: "Hola, soy Laura. Mi misión es guiarte hacia una vida de equilibrio y felicidad, cuidando tu cuerpo y mente desde la raíz.",
+      fullDescription: "Hola, soy Laura. Mi misión es guiarte hacia una vida de equilibrio y felicidad, cuidando tu cuerpo y mente desde la raíz. Logramos esta transformación con un enfoque integral, combinando el poder de la herbodietética y la nutricosmética. Utilizo los mejores ingredientes naturales para crear un plan 100% personalizado que se adapte a tus necesidades. Veo la evolución de mis clientes, cómo recuperan su bienestar, aumentan su confianza y logran sus objetivos, es mi mayor recompensa. Es un privilegio ser parte de su proceso. Te invito a iniciar tu camino hacia una vida más sana y auténtica.",
+      certificaciones: ["Coach de Salud Certificada", "Técnico Superior en Dietética", "Especialista en Mindfulness y Reducción del Estrés"],
+      redesSociales: { twitter: "#", facebook: "#" },
     },
   ];
 
-  const faqs = [
-    { question: "¿Los productos son 100% naturales?", answer: "Sí, todos nuestros productos son elaborados con ingredientes naturales certificados, sin aditivos artificiales." },
-    { question: "¿Realizan seguimiento personalizado?", answer: "Cada cliente recibe asesoría y seguimiento personalizado para garantizar resultados sostenibles." },
-    { question: "¿Los productos tienen certificaciones?", answer: "Sí, todos nuestros productos cumplen con certificaciones de calidad y seguridad alimentaria." },
-    { question: "¿Cómo se almacenan los productos?", answer: "Se recomienda mantenerlos en un lugar fresco y seco, lejos de la luz directa del sol." },
-    { question: "¿Puedo combinar varios productos?", answer: "Sí, nuestros productos pueden combinarse según las recomendaciones de nuestros especialistas." },
-    { question: "¿Tienen opciones para veganos?", answer: "Sí, contamos con varias opciones 100% veganas y libres de ingredientes animales." },
-  ];
+  // Eliminada la constante `faqs` local
 
   const [openIndex, setOpenIndex] = useState(null);
   const toggleFAQ = (index) => setOpenIndex(openIndex === index ? null : index);
@@ -122,7 +131,46 @@ const Nosotras = () => {
                 <div className="p-10 bg-white relative">
                   <h3 className="text-2xl font-bold text-primary mb-2">{member.name}</h3>
                   <p className="text-[#3e9504] font-semibold mb-4 text-lg">{member.role}</p>
-                  <p className="text-muted-foreground leading-relaxed">{member.bio}</p>
+                  <p className="text-muted-foreground leading-relaxed mb-6">{member.bio}</p>
+                  
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" className="w-full">
+                        <Eye className="h-4 w-4 mr-2" /> Ver más
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle>{member.name} - {member.role}</DialogTitle>
+                        <DialogDescription>
+                          <img src={member.image} alt={member.name} className="w-full h-auto rounded-lg mb-4 object-cover" />
+                          <p className="text-muted-foreground mb-4">{member.fullDescription}</p>
+                          {member.certificaciones && member.certificaciones.length > 0 && (
+                            <div className="mb-4">
+                              <h4 className="font-semibold text-primary mb-2">Certificaciones:</h4>
+                              <ul className="list-disc list-inside text-muted-foreground">
+                                {member.certificaciones.map((cert, certIdx) => (
+                                  <li key={certIdx}>{cert}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                          {member.redesSociales && Object.keys(member.redesSociales).length > 0 && (
+                            <div>
+                              <h4 className="font-semibold text-primary mb-2">Redes Sociales:</h4>
+                              <div className="flex gap-4">
+                                {Object.entries(member.redesSociales).map(([platform, url]) => (
+                                  <a key={platform} href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline capitalize">
+                                    {platform}
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </DialogDescription>
+                      </DialogHeader>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </Card>
             ))}
@@ -136,27 +184,38 @@ const Nosotras = () => {
           <h2 className="text-4xl md:text-5xl font-extrabold text-center text-primary mb-16 animate-fade-in">
             Preguntas Frecuentes
           </h2>
-          <div className="space-y-6">
-            {faqs.map((faq, idx) => (
-              <Card
-                key={idx}
-                className="p-6 bg-white shadow-lg rounded-3xl hover:shadow-2xl transition-all duration-500 cursor-pointer"
-                onClick={() => toggleFAQ(idx)}
-              >
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg md:text-xl font-semibold">{faq.question}</h3>
-                  <ChevronDown
-                    className={`w-6 h-6 transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`}
-                  />
-                </div>
-                <div
-                  className={`mt-4 text-muted-foreground transition-all duration-500 overflow-hidden ${openIndex === idx ? "max-h-96" : "max-h-0"}`}
-                >
-                  <p>{faq.answer}</p>
-                </div>
-              </Card>
+          <Accordion type="multiple" className="w-full space-y-6">
+            {FAQ_DATA.map((category, catIdx) => (
+              <AccordionItem key={catIdx} value={`item-${catIdx}`} className="rounded-3xl bg-white shadow-lg overflow-hidden border-none">
+                <AccordionTrigger className="px-6 py-4 text-left hover:no-underline text-xl font-semibold text-primary">
+                  {category.title}
+                </AccordionTrigger>
+                <AccordionContent className="pb-4 px-6">
+                  <div className="space-y-4">
+                    {category.faqs.map((faq, faqIdx) => (
+                      <Card
+                        key={faqIdx}
+                        className="p-4 bg-gray-50 shadow-sm rounded-2xl hover:shadow-md transition-all duration-300 cursor-pointer"
+                        onClick={() => toggleFAQ(`${catIdx}-${faqIdx}`)} // Usar un índice compuesto para las FAQ
+                      >
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-lg font-semibold">{faq.question}</h3>
+                          <ChevronDown
+                            className={`w-5 h-5 transition-transform duration-300 ${openIndex === `${catIdx}-${faqIdx}` ? "rotate-180" : ""}`}
+                          />
+                        </div>
+                        <div
+                          className={`mt-3 text-muted-foreground transition-all duration-500 overflow-hidden ${openIndex === `${catIdx}-${faqIdx}` ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+                        >
+                          <p>{faq.answer}</p>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         </div>
       </section>
 
@@ -170,6 +229,22 @@ const Nosotras = () => {
           </button>
         </div>
       </section>
+
+      {/* Google Maps Static Section */}
+      {/* <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-center text-primary mb-12 animate-fade-in">
+            Encuéntranos
+          </h2>
+          <div className="max-w-4xl mx-auto rounded-lg shadow-xl overflow-hidden">
+            <img
+              src="https://maps.googleapis.com/maps/api/staticmap?center=40.485225,-3.358112&zoom=14&size=600x400&markers=color:red%7C40.485225,-3.358112&key=TU_CLAVE_DE_API_AQUI" // Reemplaza con tu clave de API si la tienes, o déjalo así para un mapa básico
+              alt="Ubicación de la tienda"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </section> */}
 
     </Layout>
   );

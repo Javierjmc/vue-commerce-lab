@@ -2,9 +2,17 @@ import { useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { ListaProductos, ProductoNutricional } from "@/lib/productos";
 import ProductCard from "@/components/ProductCard";
-import { ShoppingBag } from "lucide-react";
+import { Filter, ShoppingBag } from "lucide-react";
 import Layout from "../layouts/Layout";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -19,13 +27,13 @@ const Tienda = () => {
   // Categorías (Patologías)
   const categories = useMemo(() => {
     const cats = ListaProductos.map((p) => p.categoriaPorPatologia);
-    return ["all", ...new Set(cats)].sort((a, b) => a.localeCompare(b)); // Ordenar alfabéticamente
+    return ["all", ...new Set(cats)];
   }, []);
 
   // Clasificaciones por Función Principal
   const clasificaciones = useMemo(() => {
     const clasifs = ListaProductos.map((p) => p.clasificacionFuncionPrincipal);
-    return ["all", ...new Set(clasifs)].sort((a, b) => a.localeCompare(b)); // Ordenar alfabéticamente
+    return ["all", ...new Set(clasifs)];
   }, []);
 
   // FILTRO PRINCIPAL: por clasificación + por categoría + por búsqueda
@@ -63,51 +71,68 @@ const Tienda = () => {
   return (
     <Layout>
       <main className="container py-8">
-        <div className="mb-8 flex flex-col md:flex-row justify-center items-center gap-6">
-          {/* Filtro por Clasificación Función Principal */}
-          <div className="flex flex-col gap-2">
-            <label htmlFor="clasificacion-select" className="text-center text-lg font-semibold">Clasificación Principal:</label>
-            <Select
-              value={selectedClasificacion}
-              onValueChange={(value) => {
-                setSelectedClasificacion(value);
-                setCurrentPage(1);
-              }}
-            >
-              <SelectTrigger id="clasificacion-select" className="w-[250px]">
-                <SelectValue placeholder="Selecciona una clasificación" />
-              </SelectTrigger>
-              <SelectContent>
-                {clasificaciones.map((clasif) => (
-                  <SelectItem key={clasif} value={clasif}>
-                    {clasif === "all" ? "Todas las clasificaciones" : clasif}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+        <div className="mb-10">
+          <h2 className="text-3xl font-bold text-center mb-6">Nuestros Productos</h2>
+          <p className="text-center text-lg text-muted-foreground mb-8">
+            Explora nuestra amplia selección de productos naturales para tu bienestar.
+          </p>
 
-          {/* Filtro por Categoría (Patología) */}
-          <div className="flex flex-col gap-2">
-            <label htmlFor="category-select" className="text-center text-lg font-semibold">Categoría por Patología:</label>
-            <Select
-              value={selectedCategory}
-              onValueChange={(value) => {
-                setSelectedCategory(value);
-                setCurrentPage(1);
-              }}
-            >
-              <SelectTrigger id="category-select" className="w-[250px]">
-                <SelectValue placeholder="Selecciona una categoría" />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map((cat) => (
-                  <SelectItem key={cat} value={cat}>
-                    {cat === "all" ? "Todas las categorías" : cat}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          {/* Botón para abrir los filtros */}
+          <div className="flex justify-center mb-8">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" className="gap-2">
+                  <Filter className="h-5 w-5" />
+                  Filtrar Productos
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+                <SheetHeader>
+                  <SheetTitle>Opciones de Filtro</SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col gap-6 py-4">
+                  {/* Filtro por Clasificación Función Principal */}
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Clasificación Principal:</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {clasificaciones.map((clasif) => (
+                        <Badge
+                          key={clasif}
+                          variant={selectedClasificacion === clasif ? "default" : "secondary"}
+                          className={`cursor-pointer px-4 py-2 text-sm rounded-full ${selectedClasificacion === clasif ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted/80"} transition-colors`}
+                          onClick={() => {
+                            setSelectedClasificacion(clasif);
+                            setCurrentPage(1);
+                          }}
+                        >
+                          {clasif === "all" ? "Todas" : clasif}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Filtro por Categoría (Patología) */}
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2 mt-4">Categoría por Patología:</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {categories.map((cat) => (
+                        <Badge
+                          key={cat}
+                          variant={selectedCategory === cat ? "default" : "secondary"}
+                          className={`cursor-pointer px-4 py-2 text-sm rounded-full ${selectedCategory === cat ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted/80"} transition-colors`}
+                          onClick={() => {
+                            setSelectedCategory(cat);
+                            setCurrentPage(1);
+                          }}
+                        >
+                          {cat === "all" ? "Todas" : cat}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
 

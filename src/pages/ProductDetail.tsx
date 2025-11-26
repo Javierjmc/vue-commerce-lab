@@ -8,14 +8,25 @@ import { ShoppingCart, ArrowLeft, Check } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import { useState } from "react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import ImageMagnifier from "@/components/ui/ImageMagnifier";
+import ProductCard from "@/components/ProductCard";
+import { useRef, useEffect } from "react";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Estado para la imagen actual
+  const mainCarouselRef = useRef<any>(null);
 
   const product = ListaProductos.find((p) => p.id.toString() === id);
+
+  useEffect(() => {
+    if (mainCarouselRef.current) {
+      mainCarouselRef.current.scrollTo(currentImageIndex);
+    }
+  }, [currentImageIndex]);
 
   if (!product) {
     return (
@@ -35,7 +46,13 @@ const ProductDetail = () => {
     addToCart(product, quantity);
   };
 
-  const currentStock = 999; // Asumiendo un stock temporal, ya que no está en ProductoNutricional
+  const currentStock: number = 999; // Asumiendo un stock temporal, ya que no está en ProductoNutricional
+
+  const relatedProducts = ListaProductos.filter(
+    (p) =>
+      p.categoriaPorPatologia === product.categoriaPorPatologia &&
+      p.id !== product.id
+  ).slice(0, 4); // Limitar a 4 productos relacionados
 
   return (
     <div className="min-h-screen bg-background">
@@ -52,25 +69,62 @@ const ProductDetail = () => {
         </Button>
 
         <div className="grid gap-8 lg:grid-cols-2">
-          {/* Carrusel de Imágenes */}
-          <Carousel className="w-full max-w-xs mx-auto">
-            <CarouselContent>
-              {product.imagenes.map((image, index) => (
-                <CarouselItem key={index}>
-                  <div className="aspect-square overflow-hidden rounded-lg bg-muted">
-                    <img
-                      src={image}
-                      alt={`${product.titulo} - ${index + 1}`}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+          {/* Contenedor de la izquierda (Carrusel Principal y Miniaturas) */}
+          <div className="flex flex-col gap-4">
+            {/* Carrusel de Imágenes */}
+            <Carousel className="w-full max-w-xs mx-auto" setApi={(api) => {
+              if (api) {
+                api.on("select", () => {
+                  setCurrentImageIndex(api.selectedScrollSnap());
+                });
+                mainCarouselRef.current = api; // Guardar la API del carrusel principal
+              }
+            }}>
+              <CarouselContent>
+                {product.imagenes.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <div className="aspect-square overflow-hidden bg-muted">
+                      <ImageMagnifier
+                        src={image}
+                        alt={`${product.titulo} - ${index + 1}`}
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
 
+            {/* Miniaturas del Carrusel */}
+            <Carousel
+              opts={{
+                align: "start",
+                dragFree: true,
+              }}
+              className="w-full max-w-xs mx-auto mt-4"
+            >
+              <CarouselContent className="-ml-1">
+                {product.imagenes.map((image, index) => (
+                  <CarouselItem key={index} className="basis-1/4 pl-1">
+                    <div
+                      className={`aspect-square cursor-pointer overflow-hidden rounded-lg border-2 ${currentImageIndex === index ? "border-primary" : "border-transparent"}
+                      `}
+                      onClick={() => setCurrentImageIndex(index)}
+                    >
+                      <img
+                        src={image}
+                        alt={`Thumbnail ${index + 1}`}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+
+          {/* Detalles del Producto (columna derecha) */}
           <div className="flex flex-col gap-6">
             <div>
               <Badge className="mb-2">{product.categoriaPorPatologia}</Badge>
@@ -79,7 +133,6 @@ const ProductDetail = () => {
                 {product.subtituloComplemento}
               </p>
             </div>
-
             {/* Se eliminan las características ya que no están en ProductoNutricional */}
             {/* <Card>
               <CardContent className="p-6">
@@ -94,7 +147,13 @@ const ProductDetail = () => {
                 </ul>
             </CardContent>
             </Card> */}
-
+            <div className="text-sm text-muted-foreground">
+              <p><strong>Clasificación:</strong> {product.clasificacionFuncionPrincipal}</p>
+              <p><strong>Subcategoría:</strong> {product.subcategoriaPorPatologia}</p>
+              <p><strong>Subtítulo:</strong> {product.subtitulo}</p>
+              <p className="mt-4">{product.textoDePresentacionCta}</p>
+            </div>
+ 
             <div className="flex items-center gap-4">
               <span className="text-4xl font-bold text-primary">
                 {product.pvp}
@@ -135,6 +194,18 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
+
+        {/* Productos Relacionados */}
+        {relatedProducts.length > 0 && (
+          <section className="mt-12">
+            <h2 className="text-2xl font-bold mb-6">Productos Relacionados</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {relatedProducts.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+          </section>
+        )}
       </main>
     </div>
   );
