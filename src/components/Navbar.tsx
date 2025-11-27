@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { ShoppingCart, Menu, X, Search, User } from "lucide-react";
+import { ShoppingCart, Menu, X, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { getCartItemCount } from "@/lib/cart";
 import { useCart } from "@/hooks/useCart";
 import TickerOfertas from "./TickerOfertas";
 import logo from "../assets/logo-herbolario.png";
+import AdvancedSearchBar from "./AdvancedSearchBar";
 
 const Navbar = () => {
   const { cart } = useCart();
   const itemCount = getCartItemCount(cart);
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const navLinks = [
@@ -21,14 +21,6 @@ const Navbar = () => {
     { name: "Tienda", to: "/tienda" },
     { name: "Blog", to: "/blog" },
   ];
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (!search.trim()) return;
-    navigate(`/tienda?search=${encodeURIComponent(search.trim())}`);
-    setSearch("");
-    setOpen(false);
-  };
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -66,23 +58,8 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Búsqueda */}
-          <form onSubmit={handleSearch} className="flex-1 max-w-md relative">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar productos…"
-              className="w-full rounded-xl border border-border bg-background/60 px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-accent transition-all"
-            />
-            <Search className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-            <button
-              type="submit"
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-accent transition"
-            >
-              <Search size={20} />
-            </button>
-          </form>
+          {/* Búsqueda avanzada */}
+          <AdvancedSearchBar />
 
           {/* Iconos: Carrito + Login */}
           <div className="flex items-center gap-4">
@@ -91,7 +68,7 @@ const Navbar = () => {
               className="flex items-center gap-1 text-foreground hover:text-accent transition"
             >
               <User className="h-5 w-5" />
-              <span className="font-medium">Iniciar sesión</span>
+              {/* <span className="font-medium">Iniciar sesión</span> */}
             </Link>
 
             <Link
@@ -99,7 +76,7 @@ const Navbar = () => {
               className="relative flex items-center gap-2 rounded-lg px-4 py-2 transition-colors hover:bg-accent/20"
             >
               <ShoppingCart className="h-5 w-5" />
-              <span className="font-medium">Carrito</span>
+              {/* <span className="font-medium">Carrito</span> */}
               {itemCount > 0 && (
                 <Badge className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full p-0 text-xs bg-accent text-accent-foreground">
                   {itemCount}
@@ -126,15 +103,9 @@ const Navbar = () => {
             ))}
 
             {/* Búsqueda móvil */}
-            <form onSubmit={handleSearch} className="mt-2">
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar productos…"
-                className="w-full rounded-lg border border-border bg-background/60 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
-              />
-            </form>
+            <div className="mt-2">
+              <AdvancedSearchBar onSearchSubmit={() => setOpen(false)} />
+            </div>
 
             {/* Iconos móviles: Login + Carrito */}
             <div className="flex gap-4 pt-2">

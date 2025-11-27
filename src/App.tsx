@@ -11,6 +11,8 @@ import NotFound from "./pages/NotFound";
 import Tienda from "./pages/Tienda";
 import Nosotras from "./pages/Nosotras";
 import Testimonios from "./pages/Testimonios";
+import Privacidad from "./pages/Privacidad";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +22,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/tienda" element={<Tienda />} />
@@ -28,6 +31,7 @@ const App = () => (
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/privacidad" element={<Privacidad />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

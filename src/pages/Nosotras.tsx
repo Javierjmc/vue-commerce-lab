@@ -179,7 +179,7 @@ const Nosotras = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-32 bg-gradient-to-r from-[#053f29]/10 via-[#3e9504]/10 to-[#1f6f12]/10">
+      <section id="preguntas-frecuentes" className="py-32 bg-gradient-to-r from-[#053f29]/10 via-[#3e9504]/10 to-[#1f6f12]/10 scroll-mt-20">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-4xl md:text-5xl font-extrabold text-center text-primary mb-16 animate-fade-in">
             Preguntas Frecuentes
@@ -238,7 +238,7 @@ const Nosotras = () => {
           </h2>
           <div className="max-w-4xl mx-auto rounded-lg shadow-xl overflow-hidden">
             <img
-              src="https://maps.googleapis.com/maps/api/staticmap?center=40.485225,-3.358112&zoom=14&size=600x400&markers=color:red%7C40.485225,-3.358112&key=TU_CLAVE_DE_API_AQUI" // Reemplaza con tu clave de API si la tienes, o déjalo así para un mapa básico
+              src="https://maps.googleapis.com/maps/api/staticmap?center=40.485225,-3.358112&zoom=14&size=600x400&markers=color:red%7C40.485225,-3.358112&key=CLAVE_DE_API_AQUI" // Reemplaza con tu clave de API si la tienes, o déjalo así para un mapa básico
               alt="Ubicación de la tienda"
               className="w-full h-full object-cover"
             />

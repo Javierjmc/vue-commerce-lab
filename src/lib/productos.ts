@@ -293,7 +293,7 @@ export const ListaProductos: ProductoNutricional[] = [
     textoDePresentacionCta: "Alivio Respiratorio. Neutraliza alérgenos y respira libre. ¡Compra ya!",
     productosAsociadosSugeridos: "VITAMINA C, PROBIONAT, TREE NAT,OMEGA 3, HEPANAT",
     imagenes: [alernat1, alernat2, alernat3, alernat4, alernat5, alernat6],
-    destacado: false
+    destacado: true
   },
   {
     id: 2,
@@ -565,7 +565,7 @@ export const ListaProductos: ProductoNutricional[] = [
     textoDePresentacionCta: "Drenante Depurativo. Ayuda a eliminar toxinas y líquidos. ¡Ligeresa ya!",
     productosAsociadosSugeridos: "DIURCAP, V-DRENAT, CIRCULNAT",
     imagenes: [diurnat1, diurnat2, diurnat3, diurnat4, diurnat5, diurnat6, diurnatLateralGotero, diurnatUnnamed13],
-    destacado: false
+    destacado: true
   },
   {
     id: 19,
@@ -597,7 +597,7 @@ export const ListaProductos: ProductoNutricional[] = [
     textoDePresentacionCta: "¡RIESGO HIPOGLUCEMIA! Estabiliza azúcar y energía. ¡Compra hoy!",
     productosAsociadosSugeridos: "BERBERINA, COLESNAT, K.O GRASS",
     imagenes: [gluconat1, gluconat2, gluconat3, gluconat4, gluconat5, gluconat6, gluconat7],
-    destacado: false
+    destacado: true
   },
   {
     id: 21,
@@ -645,7 +645,7 @@ export const ListaProductos: ProductoNutricional[] = [
     textoDePresentacionCta: "Calma Total. Adiós estrés y calambres. ¡Mejora tu sueño!",
     productosAsociadosSugeridos: "GABA, MELATONAT, ASHWAGANDHA",
     imagenes: [magnat1, magnat2, magnat3],
-    destacado: false
+    destacado: true
   },
   {
     id: 24,
@@ -853,7 +853,7 @@ export const ListaProductos: ProductoNutricional[] = [
     textoDePresentacionCta: "Vías Altas. Despeja y facilita la respiración. ¡Alivio instantáneo!S",
     productosAsociadosSugeridos: "BRONQUINAT, VITAMINA C, ALERNAT",
     imagenes: [treenat1, treenat2, treenat3, treenat4, treenat5, treenat6],
-    destacado: false
+    destacado: true
   },
   {
     id: 37,

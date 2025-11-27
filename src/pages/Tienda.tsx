@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ListaProductos, ProductoNutricional } from "@/lib/productos";
 import ProductCard from "@/components/ProductCard";
 import { Filter, ShoppingBag } from "lucide-react";
@@ -17,12 +17,30 @@ import { Button } from "@/components/ui/button";
 const ITEMS_PER_PAGE = 8;
 
 const Tienda = () => {
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedClasificacion, setSelectedClasificacion] = useState("all"); // Nuevo estado para clasificación
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
+
+  const initialSearchQuery = searchParams.get("search")?.toLowerCase() || "";
+  const initialCategoryParam = searchParams.get("category") || "all";
+
+  const [selectedCategory, setSelectedCategory] = useState(initialCategoryParam);
+  const [selectedClasificacion, setSelectedClasificacion] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { search } = useLocation();
-  const searchQuery = new URLSearchParams(search).get("search")?.toLowerCase() || "";
+  const searchQuery = initialSearchQuery;
+
+  // Efecto para sincronizar los estados con los parámetros de la URL cuando la URL cambia
+  useEffect(() => {
+    setSelectedCategory(searchParams.get("category") || "all");
+    // Si la categoría de la URL es una clasificación principal, también la establecemos
+    if (clasificaciones.includes(searchParams.get("category") || "")) {
+      setSelectedClasificacion(searchParams.get("category") || "all");
+    } else {
+      setSelectedClasificacion("all"); // Resetea si no es una clasificación principal
+    }
+    setCurrentPage(1);
+  }, [searchParams]);
 
   // Categorías (Patologías)
   const categories = useMemo(() => {
@@ -36,29 +54,49 @@ const Tienda = () => {
     return ["all", ...new Set(clasifs)];
   }, []);
 
+  // Función para actualizar la URL con los nuevos parámetros de búsqueda
+  const updateUrlParams = (newSearchTerm: string, newCategory: string, newClasificacion: string) => {
+    const params = new URLSearchParams();
+    if (newSearchTerm) {
+      params.set("search", newSearchTerm);
+    }
+    if (newCategory !== "all") {
+      params.set("category", newCategory);
+    }
+    // Considerar si la clasificación principal debe ir en un parámetro separado o fusionarse con 'category'
+    // Por simplicidad, si selectedClasificacion es diferente de 'all', lo usaremos como 'category' si no hay una categoría más específica.
+    if (newClasificacion !== "all" && newCategory === "all") {
+        params.set("category", newClasificacion);
+    }
+    navigate(`${location.pathname}?${params.toString()}`);
+  };
+
   // FILTRO PRINCIPAL: por clasificación + por categoría + por búsqueda
   const filteredProducts = useMemo(() => {
     let result = ListaProductos;
 
-    // Filtrar por clasificación de función principal
-    if (selectedClasificacion !== "all") {
-      result = result.filter((p) => p.clasificacionFuncionPrincipal === selectedClasificacion);
+    const currentCategory = searchParams.get("category") || "all";
+
+    // Filtrar por clasificación de función principal (si 'category' en URL coincide con una clasificación)
+    if (currentCategory !== "all" && clasificaciones.includes(currentCategory)) {
+      result = result.filter((p) => p.clasificacionFuncionPrincipal === currentCategory);
+    } else if (currentCategory !== "all" && categories.includes(currentCategory)) {
+        // Filtrar por categoría (patología) (si 'category' en URL coincide con una patología)
+        result = result.filter((p) => p.categoriaPorPatologia === currentCategory);
     }
 
-    // Filtrar por categoría (patología)
-    if (selectedCategory !== "all") {
-      result = result.filter((p) => p.categoriaPorPatologia === selectedCategory);
-    }
-
-    // Filtrar por búsqueda
+    // Filtrar por término de búsqueda
     if (searchQuery) {
-      result = result.filter((p) =>
-        p.producto.toLowerCase().includes(searchQuery)
+      result = result.filter(
+        (p) =>
+          p.producto.toLowerCase().includes(searchQuery) ||
+          p.titulo.toLowerCase().includes(searchQuery) ||
+          p.subtitulo.toLowerCase().includes(searchQuery)
       );
     }
 
     return result;
-  }, [selectedCategory, selectedClasificacion, searchQuery]); // Incluir selectedClasificacion en las dependencias
+  }, [searchQuery, searchParams, categories, clasificaciones]);
 
   // Paginación
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -102,6 +140,7 @@ const Tienda = () => {
                           className={`cursor-pointer px-4 py-2 text-sm rounded-full ${selectedClasificacion === clasif ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted/80"} transition-colors`}
                           onClick={() => {
                             setSelectedClasificacion(clasif);
+                            updateUrlParams(searchQuery, "all", clasif); // Actualiza la URL
                             setCurrentPage(1);
                           }}
                         >
@@ -122,6 +161,7 @@ const Tienda = () => {
                           className={`cursor-pointer px-4 py-2 text-sm rounded-full ${selectedCategory === cat ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted/80"} transition-colors`}
                           onClick={() => {
                             setSelectedCategory(cat);
+                            updateUrlParams(searchQuery, cat, "all"); // Actualiza la URL
                             setCurrentPage(1);
                           }}
                         >
