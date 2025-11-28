@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { ListaProductos, ProductoNutricional } from "../lib/productos";
 import ProductCard from "@/components/ProductCard";
 import HeroCarousel from "@/components/HeroCarousel";
+import { productCombos } from "@/lib/combos"; // Importar los combos
+import ComboCard from "@/components/ComboCard"; // Importar el componente ComboCard
 
 const Index = () => {
   const products: ProductoNutricional[] = ListaProductos.filter(p => p.destacado);
@@ -106,6 +108,26 @@ const Index = () => {
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Combos Section */}
+      <section className="py-20 bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-extrabold text-primary mb-6 leading-tight">
+              Ofertas Exclusivas en Combos
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Descubre nuestras combinaciones perfectas para un bienestar completo a precios irresistibles.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            {productCombos.map((combo) => (
+              <ComboCard key={combo.id} combo={combo} />
+            ))}
           </div>
         </div>
       </section>

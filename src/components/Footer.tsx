@@ -78,12 +78,13 @@ const Footer = () => {
             </li>
 
             <li>
-              <Link
-                to="/ubicacion"
+              <a
+                href="https://www.google.com/maps/place/C.+Rda.+Ancha,+17,+28805+Alcal%C3%A1+de+Henares,+Madrid/@40.485254,-3.358138,16z/data=!4m6!3m5!1s0xd424940117069a7:0x457e2d4165f6b9f!8m2!3d40.4852541!4d-3.3581383!16s%2Fg%2F11y7f8pb6c?hl=es&entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D"
+                target="_balck"
                 className="block text-center mt-4 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition"
               >
                 Ver Ubicación
-              </Link>
+              </a>
             </li>
           </ul>
         </div>

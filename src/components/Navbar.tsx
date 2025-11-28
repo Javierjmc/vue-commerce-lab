@@ -20,6 +20,7 @@ const Navbar = () => {
     { name: "Testimonios", to: "/testimonios" },
     { name: "Tienda", to: "/tienda" },
     { name: "Blog", to: "/blog" },
+    { name: "Contacto", to: "/contacto" }, // Añadir enlace a la página de Contacto
   ];
 
   return (

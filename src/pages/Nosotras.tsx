@@ -13,6 +13,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { FAQ_DATA } from "@/lib/faqs";
+import LocationMap from "@/components/LocationMap";
 // Eliminada la importación de '@react-google-maps/api'
 
 const Nosotras = () => {
@@ -230,21 +231,13 @@ const Nosotras = () => {
         </div>
       </section>
 
-      {/* Google Maps Static Section */}
-      {/* <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-center text-primary mb-12 animate-fade-in">
-            Encuéntranos
-          </h2>
-          <div className="max-w-4xl mx-auto rounded-lg shadow-xl overflow-hidden">
-            <img
-              src="https://maps.googleapis.com/maps/api/staticmap?center=40.485225,-3.358112&zoom=14&size=600x400&markers=color:red%7C40.485225,-3.358112&key=CLAVE_DE_API_AQUI" // Reemplaza con tu clave de API si la tienes, o déjalo así para un mapa básico
-              alt="Ubicación de la tienda"
-              className="w-full h-full object-cover"
-            />
-          </div>
+            {/* Google Maps Static Section */}
+            <section className="py-16 bg-background">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <LocationMap />
         </div>
-      </section> */}
+      </section>
+      
 
     </Layout>
   );
