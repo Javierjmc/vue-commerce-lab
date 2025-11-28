@@ -15,7 +15,7 @@ import Privacidad from "./pages/Privacidad";
 import Contacto from "./pages/Contacto"; // Importar la nueva página de Contacto
 import Blog from "./pages/Blog"; // Importar la página principal del Blog
 import ArticleDetail from "./pages/ArticleDetail"; // Importar la página de detalle del artículo
-import ComboDetail from "./pages/ComboDetail"; // Importar la página de detalle del Combo
+import ComboDetail from "./pages/ComboDetail"; // Restaurar la importación de la página de detalle del Combo
 import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
@@ -39,7 +39,7 @@ const App = () => (
           <Route path="/contacto" element={<Contacto />} /> {/* Añadir la ruta de Contacto */}
           <Route path="/blog" element={<Blog />} /> {/* Ruta para la página principal del Blog */}
           <Route path="/blog/:id" element={<ArticleDetail />} /> {/* Ruta para el detalle del artículo */}
-          <Route path="/combo/:id" element={<ComboDetail />} /> {/* Ruta para el detalle del Combo */}
+          <Route path="/combo/:id" element={<ComboDetail />} /> {/* Restaurar la ruta para el detalle del Combo */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

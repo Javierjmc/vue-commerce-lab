@@ -22,44 +22,44 @@ const ComboCard: React.FC<ComboCardProps> = ({ combo }) => {
   const discountPercentage = calculateDiscountPercentage(combo.originalPrice, combo.comboPrice);
 
   return (
-    <Card className="relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] group bg-white border border-gray-200">
-      <div className="relative">
-        <img
-          src={combo.imageUrl}
-          alt={combo.name}
-          className="w-full h-56 object-cover object-center group-hover:scale-110 transition-transform duration-500 ease-in-out"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-        {discountPercentage > 0 && (
-          <Badge className="absolute top-4 left-4 bg-red-500 text-white text-md font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
-            <Tag className="w-4 h-4" />
-            -{discountPercentage}%
-          </Badge>
-        )}
-      </div>
-      <CardHeader className="text-center pt-6 pb-3">
-        <CardTitle className="text-4xl font-extrabold text-primary mb-2 leading-tight">{combo.name}</CardTitle>
-        <CardDescription className="text-lg text-muted-foreground italic">{combo.tagline}</CardDescription>
-      </CardHeader>
-      <CardContent className="px-6 text-center">
-        <p className="text-gray-700 mb-4 text-base leading-relaxed line-clamp-3">{combo.description}</p>
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <span className="text-gray-500 line-through text-xl">{combo.originalPrice}</span>
-          <span className="text-5xl font-extrabold text-red-600">{combo.comboPrice}</span>
+    <Link to={`/combo/${combo.id}`}> {/* Envolver toda la Card en Link */}
+      <Card className="group h-full overflow-hidden transition-all duration-300 hover:shadow-[var(--shadow-hover)]"> {/* Clases de Card de ProductCard */}
+        <div className="relative aspect-square overflow-hidden bg-muted"> {/* Clases de imagen de ProductCard */}
+          <img
+            src={combo.imageUrl}
+            alt={combo.name}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          {discountPercentage > 0 && (
+            <Badge className="absolute top-4 left-4 bg-red-500 text-white text-md font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
+              <Tag className="w-4 h-4" />
+              -{discountPercentage}%
+            </Badge>
+          )}
         </div>
-      </CardContent>
-      <CardFooter className="p-6 pt-0">
-        <Link to={`/tienda?combo=${combo.id}`} className="w-full">
-          <Button className="w-full py-3 text-lg font-semibold
-            bg-gradient-to-br from-[#0a5a3f] via-[#48ad08] to-[#2c8e1e]
-            text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300
-            hover:scale-[1.01] active:scale-[0.99] transform"
+
+        <CardContent className="p-4"> {/* Unificar CardHeader y CardContent aquí */}
+          <h3 className="mb-2 line-clamp-1 text-lg font-semibold">{combo.name}</h3> {/* Estilo de título de ProductCard */}
+          <p className="mb-3 line-clamp-2 text-sm text-muted-foreground italic"> {/* Estilo de subtítulo de ProductCard */}
+            {combo.tagline}
+          </p>
+          <p className="mb-4 text-sm text-muted-foreground line-clamp-3">{combo.description}</p> {/* Descripción del combo */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-muted-foreground line-through">{combo.originalPrice}</span>
+            <span className="text-2xl font-bold text-primary">{combo.comboPrice}</span> {/* Estilo de precio de ProductCard */}
+          </div>
+        </CardContent>
+
+        <CardFooter className="p-4 pt-0">
+          <Button
+            className="w-full gap-2"
           >
             Ver Combo
           </Button>
-        </Link>
-      </CardFooter>
-    </Card>
+        </CardFooter>
+      </Card>
+    </Link>
   );
 };
 
