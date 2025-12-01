@@ -26,6 +26,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             src={product.imagenes[0]}
             alt={product.titulo}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+            loading="lazy"
           />
           <Badge className="absolute right-2 top-2">{product.categoriaPorPatologia}</Badge>
         </div>

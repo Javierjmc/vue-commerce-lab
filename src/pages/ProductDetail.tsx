@@ -11,6 +11,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import ImageMagnifier from "@/components/ui/ImageMagnifier";
 import ProductCard from "@/components/ProductCard";
 import { useRef, useEffect } from "react";
+import Footer from "@/components/Footer"; // Importar el Footer
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -55,13 +56,13 @@ const ProductDetail = () => {
   ).slice(0, 4); // Limitar a 4 productos relacionados
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col"> {/* Añadir flex-col para el layout */}
       <Navbar />
       
-      <main className="container py-8">
+      <main className="container flex-1 py-6 md:py-8 px-4 md:px-6"> {/* Ajustar padding y flex-1 */}
         <Button
           variant="ghost"
-          className="mb-6 gap-2"
+          className="mb-4 md:mb-6 gap-2 text-base"
           onClick={() => navigate("/tienda")}
         >
           <ArrowLeft className="h-4 w-4" />
@@ -72,7 +73,7 @@ const ProductDetail = () => {
           {/* Contenedor de la izquierda (Carrusel Principal y Miniaturas) */}
           <div className="flex flex-col gap-4">
             {/* Carrusel de Imágenes */}
-            <Carousel className="w-full max-w-xs mx-auto" setApi={(api) => {
+            <Carousel className="w-full max-w-sm sm:max-w-md lg:max-w-full mx-auto" setApi={(api) => { {/* Ajustar max-width */}
               if (api) {
                 api.on("select", () => {
                   setCurrentImageIndex(api.selectedScrollSnap());
@@ -102,7 +103,7 @@ const ProductDetail = () => {
                 align: "start",
                 dragFree: true,
               }}
-              className="w-full max-w-xs mx-auto mt-4"
+              className="w-full max-w-sm sm:max-w-md lg:max-w-full mx-auto mt-4"
             >
               <CarouselContent className="-ml-1">
                 {product.imagenes.map((image, index) => (
@@ -121,15 +122,17 @@ const ProductDetail = () => {
                   </CarouselItem>
                 ))}
               </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
             </Carousel>
           </div>
 
           {/* Detalles del Producto (columna derecha) */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-5 md:gap-6"> {/* Ajustar gap */}
             <div>
-              <Badge className="mb-2">{product.categoriaPorPatologia}</Badge>
-              <h1 className="mb-4 text-3xl font-bold">{product.titulo}</h1>
-              <p className="text-lg text-muted-foreground">
+              <Badge className="mb-2 text-sm">{product.categoriaPorPatologia}</Badge> {/* Ajustar tamaño del Badge */}
+              <h1 className="mb-3 text-3xl md:text-4xl font-bold">{product.titulo}</h1> {/* Ajustar tamaño del título */}
+              <p className="text-base md:text-lg text-muted-foreground">
                 {product.subtituloComplemento}
               </p>
             </div>
@@ -147,44 +150,46 @@ const ProductDetail = () => {
                 </ul>
             </CardContent>
             </Card> */}
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-muted-foreground space-y-2"> {/* Ajustar espaciado */}
               <p><strong>Clasificación:</strong> {product.clasificacionFuncionPrincipal}</p>
               <p><strong>Subcategoría:</strong> {product.subcategoriaPorPatologia}</p>
               <p><strong>Subtítulo:</strong> {product.subtitulo}</p>
-              <p className="mt-4">{product.textoDePresentacionCta}</p>
+              <p className="mt-3 md:mt-4">{product.textoDePresentacionCta}</p> {/* Ajustar margen */}
             </div>
  
             <div className="flex items-center gap-4">
-              <span className="text-4xl font-bold text-primary">
+              <span className="text-3xl md:text-4xl font-bold text-primary"> {/* Ajustar tamaño del precio */}
                 {product.pvp}
               </span>
-              <span className="text-muted-foreground">
+              <span className="text-sm md:text-base text-muted-foreground"> {/* Ajustar tamaño del stock */}
                 {currentStock > 0 ? `${currentStock} disponibles` : "Sin stock"}
               </span>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4"> {/* Ajustar flex para botones */}
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   disabled={quantity <= 1}
+                  className="h-10 w-10 text-lg"
                 >
                   -
                 </Button>
-                <span className="w-12 text-center font-semibold">{quantity}</span>
+                <span className="w-12 text-center font-semibold text-lg">{quantity}</span> {/* Ajustar tamaño del texto */}
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => setQuantity(Math.min(currentStock, quantity + 1))}
                   disabled={quantity >= currentStock}
+                  className="h-10 w-10 text-lg"
                 >
                   +
                 </Button>
               </div>
               <Button
-                className="flex-1 gap-2"
+                className="flex-1 gap-2 text-base py-2"
                 onClick={handleAddToCart}
                 disabled={currentStock === 0}
               >
@@ -197,9 +202,9 @@ const ProductDetail = () => {
 
         {/* Productos Relacionados */}
         {relatedProducts.length > 0 && (
-          <section className="mt-12">
-            <h2 className="text-2xl font-bold mb-6">Productos Relacionados</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <section className="mt-10 md:mt-12">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Productos Relacionados</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8"> {/* Ajustar grid y gap */}
               {relatedProducts.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}
@@ -207,6 +212,7 @@ const ProductDetail = () => {
           </section>
         )}
       </main>
+      <Footer /> {/* Añadir el Footer aquí */}
     </div>
   );
 };

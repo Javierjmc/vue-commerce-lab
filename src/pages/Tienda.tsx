@@ -75,14 +75,14 @@ const Tienda = () => {
   const filteredProducts = useMemo(() => {
     let result = ListaProductos;
 
-    const currentCategory = searchParams.get("category") || "all";
+    const currentCategoryInUrl = searchParams.get("category") || "all";
 
-    // Filtrar por clasificación de función principal (si 'category' en URL coincide con una clasificación)
-    if (currentCategory !== "all" && clasificaciones.includes(currentCategory)) {
-      result = result.filter((p) => p.clasificacionFuncionPrincipal === currentCategory);
-    } else if (currentCategory !== "all" && categories.includes(currentCategory)) {
-        // Filtrar por categoría (patología) (si 'category' en URL coincide con una patología)
-        result = result.filter((p) => p.categoriaPorPatologia === currentCategory);
+    if (currentCategoryInUrl !== "all") {
+      if (categories.includes(currentCategoryInUrl)) {
+        result = result.filter((p) => p.categoriaPorPatologia === currentCategoryInUrl);
+      } else if (clasificaciones.includes(currentCategoryInUrl)) {
+        result = result.filter((p) => p.clasificacionFuncionPrincipal === currentCategoryInUrl);
+      }
     }
 
     // Filtrar por término de búsqueda
@@ -108,10 +108,10 @@ const Tienda = () => {
 
   return (
     <Layout>
-      <main className="container py-8">
+      <main className="container py-8 px-4 md:px-6"> {/* Ajustar padding del main */}
         <div className="mb-10">
-          <h2 className="text-3xl font-bold text-center mb-6">Nuestros Productos</h2>
-          <p className="text-center text-lg text-muted-foreground mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 md:mb-6">Nuestros Productos</h2> {/* Ajustar tamaño del título */}
+          <p className="text-base md:text-lg text-center text-muted-foreground mb-6 md:mb-8"> {/* Ajustar tamaño del párrafo */}
             Explora nuestra amplia selección de productos naturales para tu bienestar.
           </p>
 
@@ -124,9 +124,9 @@ const Tienda = () => {
                   Filtrar Productos
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+              <SheetContent side="left" className="w-[280px] sm:w-[350px] p-4"> {/* Ajustar ancho y padding del SheetContent */}
                 <SheetHeader>
-                  <SheetTitle>Opciones de Filtro</SheetTitle>
+                  <SheetTitle className="text-2xl font-bold">Opciones de Filtro</SheetTitle> {/* Ajustar tamaño del título */}
                 </SheetHeader>
                 <div className="flex flex-col gap-6 py-4">
                   {/* Filtro por Clasificación Función Principal */}
@@ -137,10 +137,10 @@ const Tienda = () => {
                         <Badge
                           key={clasif}
                           variant={selectedClasificacion === clasif ? "default" : "secondary"}
-                          className={`cursor-pointer px-4 py-2 text-sm rounded-full ${selectedClasificacion === clasif ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted/80"} transition-colors`}
+                          className={`cursor-pointer px-3 py-1 text-sm rounded-full ${selectedClasificacion === clasif ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted/80"} transition-colors`}
                           onClick={() => {
                             setSelectedClasificacion(clasif);
-                            updateUrlParams(searchQuery, "all", clasif); // Actualiza la URL
+                            updateUrlParams(searchQuery, "all", clasif);
                             setCurrentPage(1);
                           }}
                         >
@@ -158,10 +158,10 @@ const Tienda = () => {
                         <Badge
                           key={cat}
                           variant={selectedCategory === cat ? "default" : "secondary"}
-                          className={`cursor-pointer px-4 py-2 text-sm rounded-full ${selectedCategory === cat ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted/80"} transition-colors`}
+                          className={`cursor-pointer px-3 py-1 text-sm rounded-full ${selectedCategory === cat ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted/80"} transition-colors`}
                           onClick={() => {
                             setSelectedCategory(cat);
-                            updateUrlParams(searchQuery, cat, "all"); // Actualiza la URL
+                            updateUrlParams(searchQuery, cat, "all");
                             setCurrentPage(1);
                           }}
                         >
@@ -184,7 +184,7 @@ const Tienda = () => {
         )}
 
         {/* Lista de productos */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8"> {/* Ajustar grid */}
           {paginatedProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -196,19 +196,19 @@ const Tienda = () => {
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-3 py-1 border rounded hover:bg-primary/10 transition disabled:opacity-50"
+              className="px-4 py-2 border rounded-md hover:bg-primary/10 transition disabled:opacity-50 text-base"
             >
               Anterior
             </button>
 
-            <span>{currentPage} / {totalPages}</span>
+            <span className="text-lg font-medium">{currentPage} / {totalPages}</span> {/* Ajustar tamaño del texto */}
 
             <button
               onClick={() =>
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
-              className="px-3 py-1 border rounded hover:bg-primary/10 transition disabled:opacity-50"
+              className="px-4 py-2 border rounded-md hover:bg-primary/10 transition disabled:opacity-50 text-base"
             >
               Siguiente
             </button>

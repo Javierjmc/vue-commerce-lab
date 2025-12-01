@@ -94,7 +94,7 @@ const AdvancedSearchBar = ({
   }, []);
 
   return (
-    <div className="relative flex-1 max-w-md" ref={searchRef}>
+    <div className="relative flex-1 max-w-full md:max-w-md" ref={searchRef}> {/* Ajuste para móviles */}
       <form onSubmit={handleSearchSubmit} className="flex items-center w-full">
         <DropdownMenu onOpenChange={setShowSuggestions}>
           <DropdownMenuTrigger asChild>
@@ -129,17 +129,10 @@ const AdvancedSearchBar = ({
             }}
             onFocus={() => setShowSuggestions(true)}
             placeholder="Buscar productos..."
-            className="w-full rounded-l-none rounded-r-xl border border-border bg-background/60 pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent transition-all h-10"
+            className="w-full rounded-l-none border border-border bg-background/60 pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent transition-all h-10 rounded-r-xl"
           />
           <Search className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-          <Button
-            type="submit"
-            size="icon"
-            className="absolute right-2 top-1/2 -translate-y-1/2"
-            aria-label="Buscar"
-          >
-            <Search size={20} />
-          </Button>
+          {/* Eliminado el botón de búsqueda redundante */}
         </div>
       </form>
 

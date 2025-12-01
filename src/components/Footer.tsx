@@ -14,14 +14,14 @@ import paypalLogo from "../assets/logo-paypal.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-green-950 to-green-900 text-gray-200 pt-16 pb-10 px-6">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12">
+    <footer className="bg-gradient-to-b from-green-950 to-green-900 text-gray-200 pt-16 pb-10 px-4 md:px-6">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
 
         {/* LOGO + DESCRIPCIÓN + REDES */}
         <div className="col-span-1">
-          <img src={logoBlanco} alt="Logo Vitasfera" className="h-20 mb-6" />
+          <img src={logoBlanco} alt="Logo Vitasfera" className="h-16 md:h-20 mb-6" />
 
-          <p className="text-sm text-gray-300 leading-relaxed pr-6">
+          <p className="text-sm text-gray-300 leading-relaxed pr-0 md:pr-6">
             Productos naturales y soluciones de bienestar. Envíos rápidos,
             atención personalizada y seguridad en tu compra.
           </p>
@@ -48,11 +48,12 @@ const Footer = () => {
             <li><Link to="/nosotras" className="hover:text-green-300 transition">Nosotras</Link></li>
             <li><Link to="/tienda" className="hover:text-green-300 transition">Tienda</Link></li>
             <li><Link to="/blog" className="hover:text-green-300 transition">Blog</Link></li>
+            <li><Link to="/contacto" className="hover:text-green-300 transition">Contacto</Link></li>
           </ul>
         </div>
 
         {/* CONTACTO + SOPORTE */}
-        <div>
+        <div className="mt-8 md:mt-0">
           <h3 className="font-semibold text-lg mb-5 text-green-400">Soporte</h3>
 
           <ul className="space-y-4 text-sm">
@@ -78,19 +79,18 @@ const Footer = () => {
             </li>
 
             <li>
-              <a
-                href="https://www.google.com/maps/place/C.+Rda.+Ancha,+17,+28805+Alcal%C3%A1+de+Henares,+Madrid/@40.485254,-3.358138,16z/data=!4m6!3m5!1s0xd424940117069a7:0x457e2d4165f6b9f!8m2!3d40.4852541!4d-3.3581383!16s%2Fg%2F11y7f8pb6c?hl=es&entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D"
-                target="_balck"
+              <Link
+                to="/contacto"
                 className="block text-center mt-4 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition"
               >
-                Ver Ubicación
-              </a>
+                Contactanos
+              </Link>
             </li>
           </ul>
         </div>
 
         {/* SUSCRIPCIÓN + MÉTODOS DE PAGO */}
-        <div>
+        <div className="mt-8 md:mt-0 lg:mt-0">
           <h3 className="font-semibold text-lg mb-5 text-green-400">
             Mantente Informado
           </h3>
