@@ -4,7 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react'; // Importa el icono de flecha izquierda
+import { ArrowLeft } from 'lucide-react';
+import logo from "../assets/logo-herbolario.png";
 
 const Login: React.FC = () => {
   return (
@@ -21,7 +22,7 @@ const Login: React.FC = () => {
         <Card className="w-full max-w-sm">
           <CardHeader className="space-y-1 text-center">
             <div className="flex justify-center mb-4">
-              <img src="/src/assets/logo-herbolario.png" alt="Logo de la empresa" className="h-16" />
+              <img src={logo} alt="Logo de la empresa" className="h-24" />
             </div>
             <CardTitle className="text-3xl font-bold">Iniciar Sesión</CardTitle>
             <CardDescription>Introduce tu email y contraseña para acceder a tu cuenta.</CardDescription>

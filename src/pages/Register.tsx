@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react'; // Importa el icono de flecha izquierda
+import logo from "../assets/logo-herbolario.png";
 
 const Register: React.FC = () => {
   return (
@@ -21,7 +22,7 @@ const Register: React.FC = () => {
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1 text-center">
             <div className="flex justify-center mb-4">
-              <img src="/src/assets/logo-herbolario.png" alt="Logo de la empresa" className="h-16" />
+              <img src={logo} alt="Logo de la empresa" className="h-24" />
             </div>
             <CardTitle className="text-3xl font-bold">Regístrate</CardTitle>
             <CardDescription>Crea tu cuenta para disfrutar de todas nuestras funcionalidades.</CardDescription>
