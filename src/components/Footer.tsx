@@ -16,7 +16,7 @@ import { ButtonNaturdix } from "@/components/naturdix/ButtonNaturdix";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-primary to-primary-dark text-primary-foreground pt-16 pb-10 px-4 md:px-6">
+    <footer className="bg-gradient-to-b from-black to-[#2e901f] text-primary-foreground pt-16 pb-10 px-4 md:px-6">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
 
         {/* LOGO + DESCRIPCIÓN + REDES */}
