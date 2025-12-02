@@ -17,6 +17,9 @@ import Blog from "./pages/Blog"; // Importar la página principal del Blog
 import ArticleDetail from "./pages/ArticleDetail"; // Importar la página de detalle del artículo
 import ComboDetail from "./pages/ComboDetail"; // Restaurar la importación de la página de detalle del Combo
 import ScrollToTop from "./components/ScrollToTop";
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Naturdix from './pages/Naturdix';
 
 const queryClient = new QueryClient();
 
@@ -40,6 +43,9 @@ const App = () => (
           <Route path="/blog" element={<Blog />} /> {/* Ruta para la página principal del Blog */}
           <Route path="/blog/:id" element={<ArticleDetail />} /> {/* Ruta para el detalle del artículo */}
           <Route path="/combo/:id" element={<ComboDetail />} /> {/* Restaurar la ruta para el detalle del Combo */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/naturdix" element={<Naturdix />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

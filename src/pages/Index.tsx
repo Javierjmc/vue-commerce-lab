@@ -69,7 +69,7 @@ const Index = () => {
       {/* Video Banner Section */}
       {/* <section>
         <VideoBanner
-          publicId="WhatsApp_Video_2025-12-01_at_9.57.10_AM_wrk0mp" // Reemplaza con el public ID de tu video en Cloudinary
+          publicId="WhatsApp_Video_2025-12-01_at_9.57.10_AM_wrk0mp"
         />
       </section> */}
 

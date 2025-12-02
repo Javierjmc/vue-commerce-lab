@@ -3,11 +3,11 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedVideo } from '@cloudinary/react';
 
 interface VideoBannerProps {
-  publicId: string; // El public ID del video en Cloudinary
-  title?: string; // Hacer el título opcional
-  description?: string; // Hacer la descripción opcional
-  callToActionText?: string; // Hacer el texto de CTA opcional
-  callToActionLink?: string; // Hacer el enlace de CTA opcional
+  publicId: string;
+  title?: string;
+  description?: string; 
+  callToActionText?: string; 
+  callToActionLink?: string; 
 }
 
 const VideoBanner: React.FC<VideoBannerProps> = ({
@@ -34,8 +34,8 @@ const VideoBanner: React.FC<VideoBannerProps> = ({
         muted
         playsInline
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div> {/* Overlay sutil */}
-      {/* Se elimina el contenido de texto y el botón de CTA para un banner más simple */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div> 
+  
     </div>
   );
 };
