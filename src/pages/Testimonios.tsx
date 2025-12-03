@@ -1,54 +1,19 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Star, MessageSquare, Users, Award } from "lucide-react";
+import { Star, MessageSquare, Users, Award, ArrowLeft, ArrowRight } from "lucide-react";
 import testimonialHero from "@/assets/testimonial-hero.jpg";
 import Layout from "@/layouts/Layout";
+import { testimoniosVitasfera, Testimonio } from "@/lib/testimonios"; // Importar testimoniosVitasfera y el tipo Testimonio
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel"; // Importar componentes del carrusel
 
 const Testimonios = () => {
-  const testimonials = [
-    {
-      name: "Ana Martínez",
-      location: "Madrid",
-      text: "Increíble transformación en solo 3 meses. Los productos son de excelente calidad y el seguimiento personalizado marcó la diferencia.",
-      rating: 5,
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ana",
-    },
-    {
-      name: "Carlos Ruiz",
-      location: "Barcelona",
-      text: "Después de probar muchos productos, finalmente encontré lo que funcionó para mí. El equipo es muy profesional y atento.",
-      rating: 5,
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Carlos",
-    },
-    {
-      name: "Laura Gómez",
-      location: "Valencia",
-      text: "No solo perdí peso, también gané energía y bienestar. Los suplementos son 100% naturales y se nota la calidad.",
-      rating: 5,
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Laura",
-    },
-    {
-      name: "Roberto Silva",
-      location: "Sevilla",
-      text: "El coaching personalizado fue clave. Me enseñaron a cambiar mis hábitos de forma sostenible. Totalmente recomendado.",
-      rating: 5,
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Roberto",
-    },
-    {
-      name: "Isabel Torres",
-      location: "Bilbao",
-      text: "Llevo 6 meses usando los productos y no puedo estar más feliz. Mi salud ha mejorado notablemente.",
-      rating: 5,
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Isabel",
-    },
-    {
-      name: "Javier López",
-      location: "Málaga",
-      text: "El mejor cambio que he hecho en mi vida. Sandra y su equipo son increíbles, siempre dispuestos a ayudar.",
-      rating: 5,
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Javier",
-    },
-  ];
+  const testimonials: Testimonio[] = testimoniosVitasfera; // Usar el array importado
 
   const stats = [
     { icon: Users, value: "5,000+", label: "Clientes Satisfechos" },
@@ -104,31 +69,43 @@ const Testimonios = () => {
             <p className="text-lg mt-2">Miles de personas transformando sus vidas cada día</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-6 hover:shadow-hover transition-all duration-300 hover:scale-105 bg-card shadow-card">
-                <div className="flex items-center gap-4 mb-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-16 h-16 rounded-full bg-muted"
-                  />
-                  <div>
-                    <h3 className="font-bold text-lg text-card-foreground">{testimonial.name}</h3>
-                    <p className="text-sm text-muted-foreground">{testimonial.location}</p>
-                  </div>
-                </div>
-                
-                <div className="flex mb-3">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-accent text-accent" />
-                  ))}
-                </div>
-                
-                <p className="text-muted-foreground leading-relaxed">"{testimonial.text}"</p>
-              </Card>
-            ))}
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="w-full max-w-5xl mx-auto"
+          >
+            <CarouselContent className="-ml-4">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
+                  <Card className="p-8 hover:shadow-2xl transition-all duration-300 hover:scale-105 bg-card shadow-xl rounded-xl border-t-4 border-primary max-h-[300px] flex flex-col">
+                    <div className="flex items-start gap-4 mb-4">
+                      {testimonial.imagenAutor && (
+                        <img
+                          src={testimonial.imagenAutor}
+                          alt={testimonial.autor}
+                          className="w-16 h-16 rounded-full object-cover ring-2 ring-primary ring-offset-2"
+                        />
+                      )}
+                      <div>
+                        <h3 className="font-bold text-xl text-primary tracking-tight">{testimonial.autor}</h3>
+                        <p className="text-sm text-gray-500">{testimonial.tipoAutor} {testimonial.fecha && `• ${testimonial.fecha}`}</p>
+                        <div className="flex mt-1">
+                          {[...Array(testimonial.calificacion)].map((_, i) => (
+                            <Star key={i} className="w-5 h-5 fill-yellow-500 text-yellow-500" />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <p className="text-lg text-gray-700 leading-relaxed italic flex-grow mb-4 overflow-y-auto">"{testimonial.texto}"</p>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </section>
 

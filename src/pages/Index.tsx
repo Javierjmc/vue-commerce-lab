@@ -1,29 +1,38 @@
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Truck, Shield, Heart } from "lucide-react";
-// import heroImage from "@/assets/hero-wellness.jpg";
-import bgHeroUno from "@/assets/bg-hero-1.jpg";
-import bgHeroDos from "@/assets/bg-hero-2.png";
-import bgHeroTres from "@/assets/bg-hero-3.jpg"
-import bgHeroCuatro from "@/assets/bg-hero-4.png"
+import React from 'react';
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedVideo } from '@cloudinary/react';
 import Layout from "@/layouts/Layout";
 import { Link } from "react-router-dom";
 import { ListaProductos, ProductoNutricional } from "../lib/productos";
 import ProductCard from "@/components/ProductCard";
-import HeroCarousel from "@/components/HeroCarousel";
 import { productCombos } from "@/lib/combos"; // Importar los combos
 import ComboCard from "@/components/ComboCard"; // Importar el componente ComboCard
-import VideoBanner from "@/components/VideoBanner"; // Importar el componente VideoBanner
 
 const Index = () => {
   const products: ProductoNutricional[] = ListaProductos.filter(p => p.destacado);
-  const carouselImages = [bgHeroUno, bgHeroDos, bgHeroTres, bgHeroCuatro];
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: 'dax2r7ro2',
+    },
+  });
+  const video = cld.video("1_axql3b"); // Usar el publicId del video
 
   return (
     <Layout>
       {/* Hero Section */}
       <section className="relative h-[450px] md:h-[550px] flex items-center justify-center overflow-hidden"> {/* Ajustar altura del Hero */}
-        <HeroCarousel images={carouselImages}>
-          <div className="relative z-10 container mx-auto px-4 text-center text-primary-foreground">
+        <AdvancedVideo
+          cldVid={video}
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+          <div className="relative z-20 container mx-auto px-4 text-center text-primary-foreground">
             <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 animate-fade-in"> {/* Ajustar tamaño del título */}
               ¡Quema la Grasa y Controla tu Peso!
             </h1>
@@ -63,15 +72,10 @@ const Index = () => {
        
             </div>
           </div>
-        </HeroCarousel>
+        
       </section>
 
-      {/* Video Banner Section */}
-      {/* <section>
-        <VideoBanner
-          publicId="WhatsApp_Video_2025-12-01_at_9.57.10_AM_wrk0mp"
-        />
-      </section> */}
+      
 
       {/* Features Banner */}
       <section className="bg-secondary py-4">
@@ -139,6 +143,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+
 
       {/* CTA Section */}
       <section className="py-12 md:py-16 bg-primary text-primary-foreground"> {/* Ajustar padding */}

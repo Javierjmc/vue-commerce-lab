@@ -11,16 +11,13 @@ interface VideoBannerProps {
 }
 
 const VideoBanner: React.FC<VideoBannerProps> = ({
-  publicId,
-  // Ya no se usan title, description, callToActionText, callToActionLink directamente en el renderizado
+  publicId,  // Ya no se usan title, description, callToActionText, callToActionLink directamente en el renderizado
 }) => {
   const cld = new Cloudinary({
     cloud: {
       cloudName: 'dax2r7ro2', 
     },
   });
-  console.log("Cloudinary Cloud Name:", "dax2r7ro2"); 
-  console.log("Video Public ID:", publicId);
 
   const video = cld.video(publicId);
 

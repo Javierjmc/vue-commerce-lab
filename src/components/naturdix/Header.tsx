@@ -3,6 +3,7 @@ import { ButtonNaturdix } from "@/components/naturdix/ButtonNaturdix";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import logoNaturdix from "../../assets/logo-naturdix.png"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,7 +11,7 @@ const Header = () => {
   return (
     <header className="w-full">
       {/* Top bar */}
-      <div className="bg-gradient-to-r from-[#09573c] via-[#4fac05] to-[#2e901f] text-primary-foreground py-2">
+      <div className="bg-gradient-to-r from-[#09573c] via-[#4fac05] to-[#2e901f] text-primary-foreground py-3">
         <div className="container mx-auto px-4 text-center">
           <p className="text-sm font-bold">
             CONVIÉRTETE EN UN EMBAJADOR NATURDIX
@@ -24,10 +25,7 @@ const Header = () => {
           <div className="flex items-center justify-between gap-4">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl md:text-3xl font-black text-primary tracking-tight">
-                NATURDIX
-                <span className="inline-block w-3 h-3 bg-secondary rounded-full ml-1"></span>
-              </h1>
+                <img src={logoNaturdix} alt="logo de Naturdix" className="h-10 w-auto"/>
             </div>
 
             {/* Search bar - Desktop */}

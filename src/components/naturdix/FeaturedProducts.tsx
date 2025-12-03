@@ -9,8 +9,8 @@ const parsePrice = (priceString: string): number | undefined => {
 };
 
 const FeaturedProducts = () => {
-  // Filtrar los productos para incluir solo los que tienen al menos una imagen
-  const productsToDisplay = ListaProductos.filter(product => product.imagenes && product.imagenes.length > 0);
+  // Filtrar los productos para incluir solo los que tienen al menos una imagen y son destacados
+  const productsToDisplay = ListaProductos.filter(product => product.imagenes && product.imagenes.length > 0 && product.destacado);
 
   return (
     <section id="productos" className="py-12 bg-background">
