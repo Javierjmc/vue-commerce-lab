@@ -11,6 +11,9 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel"; // Importar componentes del carrusel
+import HeroSection from "@/components/testimonials/HeroSection";
+import FeaturedTestimonials from "@/components/testimonials/FeaturedTestimonials";
+import ShareStorySection from "@/components/testimonials/ShareStorySection";
 
 const Testimonios = () => {
   const testimonials: Testimonio[] = testimoniosVitasfera; // Usar el array importado
@@ -42,8 +45,10 @@ const Testimonios = () => {
         </div>
       </section>
 
+      <HeroSection />
+
       {/* Stats Section */}
-      <section className="py-16 bg-secondary">
+      {/* <section className="py-16 bg-secondary">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {stats.map((stat, index) => (
@@ -57,7 +62,11 @@ const Testimonios = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+      <FeaturedTestimonials />
+      <ShareStorySection />
+
+
 
       
 
