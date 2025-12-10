@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Chatbot from "../components/Chatbot"; // Importar el nuevo componente Chatbot
+import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
 
 const Layout = ({ children }) => {
   return (
@@ -12,7 +12,8 @@ const Layout = ({ children }) => {
       <main className="flex-1">{children}</main>
 
       {/* Chatbot flotante */}
-      <Chatbot />
+      {/* <Chatbot /> */}
+      <ChatbotWidget />
 
       {/* Footer */}
       <Footer />

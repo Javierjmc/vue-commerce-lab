@@ -904,3 +904,13 @@ export const ListaProductos: ProductoNutricional[] = [
     destacado: false
   }
 ];
+
+export const getUniqueProductCategories = (): string[] => {
+  const categories = new Set<string>();
+  ListaProductos.forEach(producto => categories.add(producto.categoriaPorPatologia));
+  return Array.from(categories);
+};
+
+export const getProductsByCategory = (category: string): ProductoNutricional[] => {
+  return ListaProductos.filter(producto => producto.categoriaPorPatologia === category);
+};

@@ -32,6 +32,9 @@ body {
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
+    --muted: 120 20% 95%;
+    --muted-foreground: 164 30% 40%;
+
     --border: 0 0% 90%;
     --border-primary: 164 83% 35%;
     --border-secondary: 108 63% 55%;
@@ -46,14 +49,15 @@ body {
     --gradient-primary: linear-gradient(135deg, hsl(164 83% 12%), hsl(86 96% 31%));
     --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(108 63% 33%));
     --gradient-hero: linear-gradient(135deg, hsl(164 83% 12% / 0.95), hsl(108 63% 33% / 0.9));
-     --gradient-cta: linear-gradient(135deg, hsl(108 63% 33%), hsl(86 96% 31%));
-
+    --gradient-cta: linear-gradient(135deg, hsl(108 63% 33%), hsl(86 96% 31%));
+    --gradient-chat: linear-gradient(180deg, hsl(164 83% 12%), hsl(108 63% 28%));
     
 
     /* Sombras */
     --shadow-card: 0 4px 15px -2px hsl(164 83% 12% / 0.1);
     --shadow-hover: 0 8px 30px -4px hsl(164 83% 12% / 0.15);
     --shadow-popover: 0 6px 20px -2px hsl(164 83% 12% / 0.1);
+    --shadow-chat: 0 10px 40px -10px hsl(164 83% 12% / 0.3);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 164 83% 12%;
@@ -88,6 +92,10 @@ body {
   .gradient-cta {
     background: var(--gradient-cta);
   }
+
+  .gradient-chat {
+    background: var(--gradient-chat);
+  }
   
   .shadow-card {
     box-shadow: var(--shadow-card);
@@ -99,6 +107,10 @@ body {
   
   .shadow-testimonial {
     box-shadow: var(--shadow-testimonial);
+  }
+
+    .shadow-chat {
+    box-shadow: var(--shadow-chat);
   }
 }
 
@@ -114,6 +126,21 @@ body {
   .video-testimonial::before {
     content: '';
     @apply absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300;
+  }
+
+    .chat-bubble-user {
+    @apply bg-primary text-primary-foreground rounded-2xl rounded-br-md px-4 py-2.5;
+  }
+  .chat-bubble-bot {
+    @apply bg-muted text-foreground rounded-2xl rounded-bl-md px-4 py-2.5;
+  }
+  .chat-option {
+    @apply w-full text-left px-4 py-3 rounded-xl border border-border bg-card 
+           hover:border-secondary hover:bg-muted/50 transition-all duration-200 
+           text-sm font-medium cursor-pointer flex items-center gap-3;
+  }
+  .chat-option:hover {
+    transform: translateX(4px);
   }
 }
 
