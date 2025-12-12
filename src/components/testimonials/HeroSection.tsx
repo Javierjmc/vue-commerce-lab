@@ -2,7 +2,7 @@ import { Sparkles, Users, Heart } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden border-0">
       {/* Background with gradient */}
       <div className="absolute inset-0 gradient-hero" />
       

@@ -1,8 +1,26 @@
 import { useState, useMemo, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ListaProductos, ProductoNutricional } from "@/lib/productos";
+import { ListaProductos } from "@/lib/productos";
 import ProductCard from "@/components/ProductCard";
-import { Filter, ShoppingBag } from "lucide-react";
+import { 
+  Filter, 
+  Leaf, 
+  Sparkles, 
+  ChevronLeft, 
+  ChevronRight,
+  Search,
+  X,
+  SlidersHorizontal,
+  Grid3X3,
+  LayoutGrid,
+  Heart,
+  Flower2,
+  Brain,
+  Bone,
+  Pill,
+  Droplets,
+  Sun
+} from "lucide-react";
 import Layout from "../layouts/Layout";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -16,6 +34,20 @@ import { Button } from "@/components/ui/button";
 
 const ITEMS_PER_PAGE = 8;
 
+// Iconos para categorías
+const categoryIcons: Record<string, React.ReactNode> = {
+  "Sistema Inmune": <Heart className="h-4 w-4" />,
+  "Sistema Digestivo": <Droplets className="h-4 w-4" />,
+  "Sistema Nervioso": <Brain className="h-4 w-4" />,
+  "Sistema Osteoarticular": <Bone className="h-4 w-4" />,
+  "Adaptógenos": <Flower2 className="h-4 w-4" />,
+  "Vitaminas": <Sun className="h-4 w-4" />,
+  "Ácidos Grasos": <Pill className="h-4 w-4" />,
+  "Minerales": <Sparkles className="h-4 w-4" />,
+  "Proteínas": <Leaf className="h-4 w-4" />,
+  "Antiinflamatorio": <Flower2 className="h-4 w-4" />,
+};
+
 const Tienda = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,54 +59,40 @@ const Tienda = () => {
   const [selectedCategory, setSelectedCategory] = useState(initialCategoryParam);
   const [selectedClasificacion, setSelectedClasificacion] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [viewMode, setViewMode] = useState<"grid" | "large">("grid");
 
   const searchQuery = initialSearchQuery;
 
-  // Efecto para sincronizar los estados con los parámetros de la URL cuando la URL cambia
   useEffect(() => {
     setSelectedCategory(searchParams.get("category") || "all");
-    // Si la categoría de la URL es una clasificación principal, también la establecemos
     if (clasificaciones.includes(searchParams.get("category") || "")) {
       setSelectedClasificacion(searchParams.get("category") || "all");
     } else {
-      setSelectedClasificacion("all"); // Resetea si no es una clasificación principal
+      setSelectedClasificacion("all");
     }
     setCurrentPage(1);
   }, [searchParams]);
 
-  // Categorías (Patologías)
   const categories = useMemo(() => {
     const cats = ListaProductos.map((p) => p.categoriaPorPatologia);
     return ["all", ...new Set(cats)];
   }, []);
 
-  // Clasificaciones por Función Principal
   const clasificaciones = useMemo(() => {
     const clasifs = ListaProductos.map((p) => p.clasificacionFuncionPrincipal);
     return ["all", ...new Set(clasifs)];
   }, []);
 
-  // Función para actualizar la URL con los nuevos parámetros de búsqueda
   const updateUrlParams = (newSearchTerm: string, newCategory: string, newClasificacion: string) => {
     const params = new URLSearchParams();
-    if (newSearchTerm) {
-      params.set("search", newSearchTerm);
-    }
-    if (newCategory !== "all") {
-      params.set("category", newCategory);
-    }
-    // Considerar si la clasificación principal debe ir en un parámetro separado o fusionarse con 'category'
-    // Por simplicidad, si selectedClasificacion es diferente de 'all', lo usaremos como 'category' si no hay una categoría más específica.
-    if (newClasificacion !== "all" && newCategory === "all") {
-        params.set("category", newClasificacion);
-    }
+    if (newSearchTerm) params.set("search", newSearchTerm);
+    if (newCategory !== "all") params.set("category", newCategory);
+    if (newClasificacion !== "all" && newCategory === "all") params.set("category", newClasificacion);
     navigate(`${location.pathname}?${params.toString()}`);
   };
 
-  // FILTRO PRINCIPAL: por clasificación + por categoría + por búsqueda
   const filteredProducts = useMemo(() => {
     let result = ListaProductos;
-
     const currentCategoryInUrl = searchParams.get("category") || "all";
 
     if (currentCategoryInUrl !== "all") {
@@ -85,7 +103,6 @@ const Tienda = () => {
       }
     }
 
-    // Filtrar por término de búsqueda
     if (searchQuery) {
       result = result.filter(
         (p) =>
@@ -98,7 +115,6 @@ const Tienda = () => {
     return result;
   }, [searchQuery, searchParams, categories, clasificaciones]);
 
-  // Paginación
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
 
   const paginatedProducts = useMemo(() => {
@@ -106,59 +122,164 @@ const Tienda = () => {
     return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredProducts, currentPage]);
 
+  const clearFilters = () => {
+    setSelectedCategory("all");
+    setSelectedClasificacion("all");
+    navigate(location.pathname);
+  };
+
+  const hasActiveFilters = selectedCategory !== "all" || selectedClasificacion !== "all" || searchQuery;
+  const activeFiltersCount = [selectedCategory !== "all", selectedClasificacion !== "all", !!searchQuery].filter(Boolean).length;
+
   return (
     <Layout>
-      <main className="container py-8 px-4 md:px-6"> {/* Ajustar padding del main */}
-        <div className="mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 md:mb-6">Nuestros Productos</h2> {/* Ajustar tamaño del título */}
-          <p className="text-base md:text-lg text-center text-muted-foreground mb-6 md:mb-8"> {/* Ajustar tamaño del párrafo */}
-            Explora nuestra amplia selección de productos naturales para tu bienestar.
-          </p>
+      {/* Hero Section */}
+      <section className="relative overflow-hidden border border-gray-200" style={{ background: 'linear-gradient(135deg, hsl(158 64% 18%) 0%, hsl(142 52% 28%) 50%, hsl(84 50% 35%) 100%)' }}>
+        {/* Animated decorative elements */}
+        <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-white/5 blur-3xl animate-float" />
+        <div className="absolute bottom-20 right-10 w-48 h-48 rounded-full bg-white/5 blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 rounded-full bg-white/3 blur-2xl animate-float" style={{ animationDelay: '-1.5s' }} />
+        
+        <div className="container relative py-20 md:py-28 px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass mb-8 animate-fade-in-up">
+              <Sparkles className="h-4 w-4 text-yellow-300" />
+              <span className="text-sm font-semibold text-white">
+                Más de {ListaProductos.length} productos 100% naturales
+              </span>
+            </div>
+            
+            {/* Title */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+              <span className="text-white drop-shadow-lg">Nuestra</span>{" "}
+              <span className="text-gradient">Tienda</span>
+            </h1>
+            
+            {/* Subtitle */}
+            <p className="text-lg md:text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+              Descubre productos naturales de la más alta calidad para cuidar tu salud y bienestar de forma integral
+            </p>
 
-          {/* Botón para abrir los filtros */}
-          <div className="flex justify-center mb-8">
+            {/* Stats */}
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+              <div className="hero-stat min-w-[120px]">
+                <div className="text-3xl md:text-4xl font-bold text-white">{ListaProductos.length}+</div>
+                <div className="text-sm text-white/70 mt-1">Productos</div>
+              </div>
+              <div className="hero-stat min-w-[120px]">
+                <div className="text-3xl md:text-4xl font-bold text-white">{categories.length - 1}</div>
+                <div className="text-sm text-white/70 mt-1">Categorías</div>
+              </div>
+              <div className="hero-stat min-w-[120px]">
+                <div className="text-3xl md:text-4xl font-bold text-white">100%</div>
+                <div className="text-sm text-white/70 mt-1">Natural</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Wave divider */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 120L48 108C96 96 192 72 288 60C384 48 480 48 576 54C672 60 768 72 864 78C960 84 1056 84 1152 78C1248 72 1344 60 1392 54L1440 48V120H1392C1344 120 1248 120 1152 120C1056 120 960 120 864 120C768 120 672 120 576 120C480 120 384 120 288 120C192 120 96 120 48 120H0Z" fill="oklch(92.8% 0.006 264.531)"/>
+          </svg>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <main className="container py-12 md:py-16 px-4 md:px-6 border-4">
+        {/* Control Bar */}
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-10">
+          {/* Left: Filters */}
+          <div className="flex flex-wrap items-center gap-3">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" className="gap-2">
-                  <Filter className="h-5 w-5" />
-                  Filtrar Productos
+                <Button 
+                  variant="outline" 
+                  className="gap-2.5 rounded-full px-5 h-12 border-2 hover:border-primary hover:bg-primary/5 transition-all duration-300 font-semibold"
+                >
+                  <SlidersHorizontal className="h-4 w-4" />
+                  Filtros
+                  {activeFiltersCount > 0 && (
+                    <span className="ml-1 h-6 w-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">
+                      {activeFiltersCount}
+                    </span>
+                  )}
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[280px] sm:w-[350px] p-4"> {/* Ajustar ancho y padding del SheetContent */}
-                <SheetHeader>
-                  <SheetTitle className="text-2xl font-bold">Opciones de Filtro</SheetTitle> {/* Ajustar tamaño del título */}
-                </SheetHeader>
-                <div className="flex flex-col gap-6 py-4">
-                  {/* Filtro por Clasificación Función Principal */}
+              <SheetContent side="left" className="w-[340px] sm:w-[420px] p-0 overflow-y-auto border-0">
+                {/* Filter Header */}
+                <div className="gradient-hero p-8">
+                  <SheetHeader>
+                    <SheetTitle className="text-2xl font-bold text-white flex items-center gap-3">
+                      <div className="p-2 rounded-xl glass">
+                        <Filter className="h-5 w-5" />
+                      </div>
+                      Filtrar Productos
+                    </SheetTitle>
+                  </SheetHeader>
+                  <p className="text-white/70 text-sm mt-2">
+                    Encuentra exactamente lo que buscas
+                  </p>
+                </div>
+                
+                {/* Filter Body */}
+                <div className="p-6 space-y-8">
+                  {/* Quick Stats */}
+                  <div className="flex gap-3">
+                    <div className="flex-1 bg-muted rounded-2xl p-4 text-center">
+                      <div className="text-2xl font-bold text-primary">{filteredProducts.length}</div>
+                      <div className="text-xs text-muted-foreground mt-1">Productos</div>
+                    </div>
+                    <div className="flex-1 bg-muted rounded-2xl p-4 text-center">
+                      <div className="text-2xl font-bold text-secondary">{activeFiltersCount}</div>
+                      <div className="text-xs text-muted-foreground mt-1">Filtros activos</div>
+                    </div>
+                  </div>
+
+                  {/* Clasificación Principal */}
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Clasificación Principal:</h3>
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="p-1.5 rounded-lg bg-secondary/10">
+                        <Leaf className="h-4 w-4 text-secondary" />
+                      </div>
+                      <h3 className="font-semibold text-lg">Por Función</h3>
+                    </div>
                     <div className="flex flex-wrap gap-2">
                       {clasificaciones.map((clasif) => (
-                        <Badge
+                        <button
                           key={clasif}
-                          variant={selectedClasificacion === clasif ? "default" : "secondary"}
-                          className={`cursor-pointer px-3 py-1 text-sm rounded-full ${selectedClasificacion === clasif ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted/80"} transition-colors`}
+                          className={`filter-chip flex items-center gap-2 ${selectedClasificacion === clasif ? 'filter-chip-active' : 'filter-chip-inactive'}`}
                           onClick={() => {
                             setSelectedClasificacion(clasif);
                             updateUrlParams(searchQuery, "all", clasif);
                             setCurrentPage(1);
                           }}
                         >
+                          {clasif !== "all" && categoryIcons[clasif]}
                           {clasif === "all" ? "Todas" : clasif}
-                        </Badge>
+                        </button>
                       ))}
                     </div>
                   </div>
 
-                  {/* Filtro por Categoría (Patología) */}
+                  {/* Divider */}
+                  <div className="h-px bg-border" />
+
+                  {/* Categoría por Patología */}
                   <div>
-                    <h3 className="font-semibold text-lg mb-2 mt-4">Categoría por Patología:</h3>
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="p-1.5 rounded-lg bg-accent/10">
+                        <Heart className="h-4 w-4 text-accent" />
+                      </div>
+                      <h3 className="font-semibold text-lg">Por Necesidad</h3>
+                    </div>
                     <div className="flex flex-wrap gap-2">
                       {categories.map((cat) => (
-                        <Badge
+                        <button
                           key={cat}
-                          variant={selectedCategory === cat ? "default" : "secondary"}
-                          className={`cursor-pointer px-3 py-1 text-sm rounded-full ${selectedCategory === cat ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted/80"} transition-colors`}
+                          className={`filter-chip ${selectedCategory === cat ? 'filter-chip-active' : 'filter-chip-inactive'}`}
                           onClick={() => {
                             setSelectedCategory(cat);
                             updateUrlParams(searchQuery, cat, "all");
@@ -166,51 +287,155 @@ const Tienda = () => {
                           }}
                         >
                           {cat === "all" ? "Todas" : cat}
-                        </Badge>
+                        </button>
                       ))}
                     </div>
                   </div>
+
+                  {/* Clear Filters Button */}
+                  {hasActiveFilters && (
+                    <Button
+                      variant="outline"
+                      className="w-full gap-2 rounded-full h-12 border-2 border-destructive/30 text-destructive hover:bg-destructive/10 hover:border-destructive/50"
+                      onClick={clearFilters}
+                    >
+                      <X className="h-4 w-4" />
+                      Limpiar todos los filtros
+                    </Button>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>
+
+            {/* Active Filters Pills */}
+            {hasActiveFilters && (
+              <div className="flex flex-wrap items-center gap-2">
+                {searchQuery && (
+                  <Badge variant="secondary" className="gap-1.5 px-4 py-2 rounded-full text-sm font-medium bg-primary/10 text-primary border-0">
+                    <Search className="h-3 w-3" />
+                    "{searchQuery}"
+                    <button onClick={() => navigate(location.pathname)} className="ml-1 hover:bg-primary/20 rounded-full p-0.5">
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+                {selectedCategory !== "all" && (
+                  <Badge variant="secondary" className="gap-1.5 px-4 py-2 rounded-full text-sm font-medium bg-secondary/10 text-secondary border-0">
+                    {selectedCategory}
+                    <button onClick={() => {
+                      setSelectedCategory("all");
+                      updateUrlParams(searchQuery, "all", selectedClasificacion);
+                    }} className="ml-1 hover:bg-secondary/20 rounded-full p-0.5">
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+                {selectedClasificacion !== "all" && selectedCategory === "all" && (
+                  <Badge variant="secondary" className="gap-1.5 px-4 py-2 rounded-full text-sm font-medium bg-accent/10 text-accent border-0">
+                    {selectedClasificacion}
+                    <button onClick={() => {
+                      setSelectedClasificacion("all");
+                      updateUrlParams(searchQuery, selectedCategory, "all");
+                    }} className="ml-1 hover:bg-accent/20 rounded-full p-0.5">
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Right: View toggle & Results count */}
+          <div className="flex items-center gap-4">
+            {/* View Toggle */}
+            <div className="flex items-center gap-1 p-1 bg-muted rounded-full">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`p-2.5 rounded-full transition-all duration-300 ${viewMode === "grid" ? "bg-primary text-primary-foreground shadow-md" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                <Grid3X3 className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => setViewMode("large")}
+                className={`p-2.5 rounded-full transition-all duration-300 ${viewMode === "large" ? "bg-primary text-primary-foreground shadow-md" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                <LayoutGrid className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Results count */}
+            <div className="text-sm text-muted-foreground">
+              <span className="font-bold text-2xl text-foreground">{filteredProducts.length}</span>
+              <span className="ml-2">productos</span>
+            </div>
           </div>
         </div>
 
-        {/* Si no hay productos */}
+        {/* Empty State */}
         {filteredProducts.length === 0 && (
-          <p className="text-center text-lg text-muted-foreground mt-10">
-            No se encontraron productos que coincidan con la búsqueda.
-          </p>
+          <div className="text-center py-24 animate-fade-in-up">
+            <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-muted flex items-center justify-center">
+              <Search className="h-12 w-12 text-muted-foreground" />
+            </div>
+            <h3 className="text-3xl font-bold mb-3">No se encontraron productos</h3>
+            <p className="text-muted-foreground mb-8 text-lg">
+              Intenta con otros filtros o términos de búsqueda
+            </p>
+            <Button onClick={clearFilters} size="lg" className="gap-2 rounded-full px-8">
+              <X className="h-4 w-4" />
+              Limpiar filtros
+            </Button>
+          </div>
         )}
 
-        {/* Lista de productos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8"> {/* Ajustar grid */}
-          {paginatedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+        {/* Products Grid */}
+        <div className={`grid gap-6 md:gap-8 ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}>
+          {paginatedProducts.map((product, index) => (
+            <div 
+              key={product.id} 
+              className="animate-fade-in-up"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
+              <ProductCard product={product} viewMode={viewMode} />
+            </div>
           ))}
         </div>
 
-        {/* Paginación */}
+        {/* Pagination */}
         {totalPages > 1 && (
-          <div className="mt-8 flex justify-center items-center gap-3">
+          <div className="mt-16 flex flex-col sm:flex-row justify-center items-center gap-4">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 border rounded-md hover:bg-primary/10 transition disabled:opacity-50 text-base"
+              className="pagination-btn"
             >
+              <ChevronLeft className="h-4 w-4" />
               Anterior
             </button>
 
-            <span className="text-lg font-medium">{currentPage} / {totalPages}</span> {/* Ajustar tamaño del texto */}
+            <div className="flex items-center gap-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`w-12 h-12 rounded-full font-semibold transition-all duration-300 ${
+                    currentPage === page
+                      ? 'bg-primary text-primary-foreground shadow-lg scale-110'
+                      : 'bg-card border border-border hover:bg-muted hover:scale-105'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+            </div>
 
             <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 border rounded-md hover:bg-primary/10 transition disabled:opacity-50 text-base"
+              className="pagination-btn"
             >
               Siguiente
+              <ChevronRight className="h-4 w-4" />
             </button>
           </div>
         )}

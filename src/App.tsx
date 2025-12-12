@@ -8,7 +8,6 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
-import Tienda from "./pages/Tienda";
 import Nosotras from "./pages/Nosotras";
 import Testimonios from "./pages/Testimonios";
 import Privacidad from "./pages/Privacidad";
@@ -20,6 +19,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Naturdix from './pages/Naturdix';
+import Tienda from "./pages/Tienda";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +31,7 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Index />} />          
           <Route path="/tienda" element={<Tienda />} />
           <Route path="/nosotras" element={<Nosotras />} />
           <Route path="/testimonios" element={<Testimonios />} />

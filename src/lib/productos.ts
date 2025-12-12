@@ -14,6 +14,10 @@ export interface ProductoNutricional {
   productosAsociadosSugeridos: string;
   imagenes: string[];
   destacado: boolean;
+  descripcionExtendida?: string; // Nueva propiedad opcional
+  ingredientesClave?: string[]; // Nueva propiedad opcional
+  beneficiosClave?: string[]; // Nueva propiedad opcional
+  dosis?: string; // Nueva propiedad opcional
 }
 
 // 2. Definición del array de datos con la interfaz aplicada

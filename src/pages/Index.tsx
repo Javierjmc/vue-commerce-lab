@@ -77,26 +77,6 @@ const Index = () => {
 
       
 
-      {/* Features Banner */}
-      <section className="bg-secondary py-4">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 text-center text-secondary-foreground"> {/* Ajustar gap */}
-            <div className="flex items-center justify-center gap-2 md:gap-3"> {/* Ajustar gap */}
-              <Truck className="w-7 h-7 md:w-8 md:h-8" /> {/* Ajustar tamaño del icono */}
-              <span className="font-semibold text-base md:text-lg">ENVÍOS GRATIS</span> {/* Ajustar tamaño del texto */}
-            </div>
-            <div className="flex items-center justify-center gap-2 md:gap-3">
-              <Shield className="w-7 h-7 md:w-8 md:h-8" />
-              <span className="font-semibold text-base md:text-lg">CALIDAD GARANTIZADA</span>
-            </div>
-            <div className="flex items-center justify-center gap-2 md:gap-3">
-              <Heart className="w-7 h-7 md:w-8 md:h-8" />
-              <span className="font-semibold text-base md:text-lg">100% NATURAL</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Products Showcase */}
       <section className="py-12 md:py-16 bg-gradient-card"> {/* Ajustar padding */}
         <div className="container mx-auto px-4">
