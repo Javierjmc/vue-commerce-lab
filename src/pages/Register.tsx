@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react'; // Importa el icono de flecha izquierda
 import logo from "../assets/logo-herbolario.png";
+import { ChatbotWidget } from '@/components/chatbot/ChatbotWidget';
 
 const Register: React.FC = () => {
   return (
@@ -70,6 +71,7 @@ const Register: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+      <ChatbotWidget />
     </div>
   );
 };

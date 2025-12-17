@@ -20,10 +20,13 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 164 83% 12%;
 
-    --primary: 164 83% 12%;
+    /* --primary: 164 83% 12%; */
+    --primary: 108 63% 33%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 108 63% 33%;
+
+    /* --secondary: 108 63% 33%; */
+    --secondary: 0 0% 35%;
     --secondary-foreground: 0 0% 100%;
 
     --accent: 86 96% 31%;
@@ -33,7 +36,7 @@ body {
     --destructive-foreground: 0 0% 100%;
 
     --muted: 120 20% 95%;
-    --muted-foreground: 164 30% 40%;
+    --muted-foreground: 0 0% 70%;
 
     --border: 0 0% 90%;
     --border-primary: 164 83% 35%;
@@ -51,6 +54,7 @@ body {
      --emerald: 158 64% 22%;
      --emerald-light: 158 50% 40%;
      --sage: 120 20% 85%;
+     --deep-green: 164 83% 8%;
 
      /* Product detail specific */
     --product-bg: 120 15% 98%;
@@ -61,19 +65,19 @@ body {
 
     /* Gradientes solo verdes */
     --gradient-primary: linear-gradient(135deg, hsl(164 83% 12%), hsl(86 96% 31%));
-    /* --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(108 63% 33%)); */
     --gradient-hero: linear-gradient(135deg, hsl(164 83% 12% / 0.95), hsl(108 63% 33% / 0.9));
     --gradient-cta: linear-gradient(135deg, hsl(108 63% 33%), hsl(86 96% 31%));
     --gradient-chat: linear-gradient(180deg, hsl(164 83% 12%), hsl(108 63% 28%));
 
     --gradient-hero: linear-gradient(135deg, hsl(158 64% 18%) 0%, hsl(142 52% 28%) 50%, hsl(84 50% 35%) 100%);
+    --gradient-hero-overlay: linear-gradient(180deg, hsl(164 83% 8% / 0.85) 0%, hsl(158 64% 12% / 0.7) 50%, hsl(164 83% 8% / 0.9) 100%);
     --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(120 20% 98%) 100%);
     --gradient-gold: linear-gradient(135deg, hsl(45 93% 58%) 0%, hsl(38 90% 50%) 100%);
     --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
     --gradient-shine: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
     --gradient-product-panel: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(120 15% 97%) 100%);
     --gradient-urgency: linear-gradient(90deg, hsl(38 92% 50%) 0%, hsl(25 95% 53%) 100%);
-
+    --gradient-text-highlight: linear-gradient(135deg, hsl(84 60% 50%) 0%, hsl(108 63% 45%) 100%);
     /* Sombras */
     --shadow-card: 0 4px 15px -2px hsl(164 83% 12% / 0.1);
     --shadow-hover: 0 8px 30px -4px hsl(164 83% 12% / 0.15);
@@ -88,6 +92,15 @@ body {
     --shadow-gold: 0 8px 32px -8px hsl(45 93% 58% / 0.4);
     --shadow-product-panel: 0 4px 24px -4px hsl(164 83% 12% / 0.08), 0 12px 48px -8px hsl(164 83% 12% / 0.06);
     --shadow-sticky: 0 8px 32px -8px hsl(164 83% 12% / 0.15);
+
+    --brand-emerald: 158 65% 18%;
+    --brand-forest: 160 70% 12%;
+    --brand-lime: 88 75% 40%;
+    --brand-gold: 42 95% 55%;
+    --brand-amber: 35 92% 50%;
+    --brand-cream: 45 50% 96%;
+    --brand-sage: 140 25% 75%;
+
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 164 83% 12%;
@@ -117,6 +130,10 @@ body {
   
   .gradient-hero {
     background: var(--gradient-hero);
+  }
+
+  .gradient-hero-overlay {
+    background: var(--gradient-hero-overlay);
   }
   
   .gradient-cta {
@@ -172,6 +189,27 @@ body {
   .shadow-sticky {
     box-shadow: var(--shadow-sticky);
   }
+
+  .shadow-hero-text {
+    text-shadow: var(--shadow-hero-text);
+  }
+
+    .text-gradient-brand {
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--secondary)) 50%, hsl(var(--primary)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-hero {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--brand-forest)) 0%,
+      hsl(var(--primary)) 40%,
+      hsl(var(--secondary)) 100%
+    );
+  }
+
 }
 
 @layer components {
@@ -467,6 +505,7 @@ body {
 .glass {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -488,6 +527,16 @@ body {
 .pattern-botanical {
   background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 10c-5 10-15 15-25 15 10 5 15 15 15 25-5-10-15-15-25-15 10-5 15-15 15-25M75 60c-5 10-15 15-25 15 10 5 15 15 15 25-5-10-15-15-25-15 10-5 15-15 15-25' fill='%23ffffff' fill-opacity='0.03'/%3E%3C/svg%3E");
 }
+
+  @keyframes ken-burns {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.1);
+    }
+  }
+
 
 /* Animations */
 @keyframes float {
@@ -532,6 +581,23 @@ body {
   50% { box-shadow: 0 0 40px hsl(var(--secondary) / 0.5); }
 }
 
+@keyframes text-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+    filter: blur(10px);
+    }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    }
+  }
+
+.animate-ken-burns {
+  animation: ken-burns 20s ease-out forwards;
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -557,3 +623,19 @@ body {
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+
+  .animate-text-reveal {
+    animation: text-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+.noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  

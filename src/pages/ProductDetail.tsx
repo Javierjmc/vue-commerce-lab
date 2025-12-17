@@ -31,6 +31,7 @@ import Footer from "@/components/Footer";
 import FeaturesBanner from "@/components/FeaturesBanner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -524,6 +525,7 @@ const ProductDetail = () => {
       </main>
 
       <Footer />
+      <ChatbotWidget />
     </div>
   );
 };

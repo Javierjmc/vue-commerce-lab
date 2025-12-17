@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, CreditCard } from "lucide-react";
 import { calculateCartTotal } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
+import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -186,6 +187,7 @@ const Checkout = () => {
           </div>
         </div>
       </main>
+      <ChatbotWidget />
     </div>
   );
 };

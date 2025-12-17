@@ -13,6 +13,9 @@ export default {
       },
     },
     extend: {
+       fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -47,6 +50,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          light: "hsl(var(--gold-light))",
+        },
+        emerald: {
+          DEFAULT: "hsl(var(--emerald))",
+          light: "hsl(var(--emerald-light))",
+        },
+        sage: "hsl(var(--sage))",
+        "deep-green": "hsl(var(--deep-green))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -56,6 +69,16 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        brand: {
+          green: {
+            dark: "hsl(var(--brand-green-dark))",
+            light: "hsl(var(--brand-green-light))",
+          },
+          gold: "hsl(var(--brand-gold))",
+          orange: "hsl(var(--brand-orange))",
+          cream: "hsl(var(--brand-cream))",
+          forest: "hsl(var(--brand-forest))",
         },
       },
       borderRadius: {
@@ -88,6 +111,10 @@ export default {
           "0%": { transform: "scale(0.95)", opacity: "0" },
           "100%": { transform: "scale(1)", opacity: "1" }
         },
+        "slide-in-right": {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
         "float": {
           "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
           "50%": { transform: "translateY(-20px) rotate(5deg)" },
@@ -109,6 +136,7 @@ export default {
         "float": "float 6s ease-in-out infinite",
         "shimmer": "shimmer 1.5s infinite",
         "marquee": "marquee 25s linear infinite",
+        "slide-in-right": "slide-in-right 0.3s ease-out",
       },
     },
   },

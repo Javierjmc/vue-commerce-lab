@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import logo from "../assets/logo-herbolario.png";
+import { ChatbotWidget } from '@/components/chatbot/ChatbotWidget';
 
 const Login: React.FC = () => {
   return (
@@ -60,6 +61,7 @@ const Login: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+      <ChatbotWidget />
     </div>
   );
 };

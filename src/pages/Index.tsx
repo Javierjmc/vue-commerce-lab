@@ -9,6 +9,7 @@ import { ListaProductos, ProductoNutricional } from "../lib/productos";
 import ProductCard from "@/components/ProductCard";
 import { productCombos } from "@/lib/combos"; // Importar los combos
 import ComboCard from "@/components/ComboCard"; // Importar el componente ComboCard
+import HeroCarouselVip from '@/components/HeroCarouselVip';
 
 const Index = () => {
   const products: ProductoNutricional[] = ListaProductos.filter(p => p.destacado);
@@ -19,10 +20,21 @@ const Index = () => {
   });
   const video = cld.video("1_axql3b"); // Usar el publicId del video
 
+  const VideoPlaceholder = (
+    <AdvancedVideo
+          cldVid={video}
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+  );
+
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative h-[450px] md:h-[550px] flex items-center justify-center overflow-hidden"> {/* Ajustar altura del Hero */}
+      {/* <section className="relative h-[450px] md:h-[550px] flex items-center justify-center overflow-hidden">
         <AdvancedVideo
           cldVid={video}
           className="absolute inset-0 w-full h-full object-cover z-0 opacity-80"
@@ -32,50 +44,51 @@ const Index = () => {
           playsInline
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-          <div className="relative z-20 container mx-auto px-4 text-center text-primary-foreground">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 animate-fade-in"> {/* Ajustar tamaño del título */}
-              ¡Quema la Grasa y Controla tu Peso!
-            </h1>
-            <p className="text-lg md:text-2xl mb-6 md:mb-8 max-w-2xl mx-auto animate-fade-in"> {/* Ajustar tamaño y margen del párrafo */}
-              Producto rico en fibra que mejora la salud
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-<Link to="/tienda">
-  <Button
-    className="
-      relative px-16 py-4 md:px-24 md:py-6 text-xl md:text-2xl font-extrabold tracking-wide {/* Ajustar padding y texto */}
-      rounded-2xl overflow-hidden
-      bg-gradient-to-br from-[#0a5a3f] via-[#48ad08] to-[#2c8e1e]
-      shadow-xl shadow-[#48ad08]/40
-      transition-all duration-500 
-      hover:scale-110 hover:shadow-3xl hover:shadow-[#48ad08]/60
-      hover:brightness-110 hover:-translate-y-1
-      group border border-white/10
-    "
-  >
-    {/* Glow exterior animado */}
-    <span className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/30 to-transparent opacity-20 blur-xl group-hover:opacity-30 transition-all duration-500" />
+        <div className="relative z-20 container mx-auto px-4 text-center text-primary-foreground">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 animate-fade-in">
+            ¡Quema la Grasa y Controla tu Peso!
+          </h1>
+          <p className="text-lg md:text-2xl mb-6 md:mb-8 max-w-2xl mx-auto animate-fade-in">
+            Producto rico en fibra que mejora la salud
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
+            <Link to="/tienda">
+              <Button
+                className="
+                  relative px-16 py-4 md:px-24 md:py-6 text-xl md:text-2xl font-extrabold tracking-wide
+                  rounded-2xl overflow-hidden
+                  bg-gradient-to-br from-[#0a5a3f] via-[#48ad08] to-[#2c8e1e]
+                  shadow-xl shadow-[#48ad08]/40
+                  transition-all duration-500 
+                  hover:scale-110 hover:shadow-3xl hover:shadow-[#48ad08]/60
+                  hover:brightness-110 hover:-translate-y-1
+                  group border border-white/10"
+              >
+            
+                <span className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/30 to-transparent opacity-20 blur-xl group-hover:opacity-30 transition-all duration-500" />
 
-    {/* Glow lineal borde interno */}
-    <span className="absolute inset-0 rounded-2xl border border-white/20 group-hover:border-white/40 transition-all duration-500" />
+                
+                <span className="absolute inset-0 rounded-2xl border border-white/20 group-hover:border-white/40 transition-all duration-500" />
 
-    {/* Shine animado diagonal */}
-    <span className="absolute top-0 left-[-150%] h-full w-1/2 bg-white/20 rotate-12 group-hover:translate-x-[350%] transition-transform duration-700 ease-out" />
+               
+                <span className="absolute top-0 left-[-150%] h-full w-1/2 bg-white/20 rotate-12 group-hover:translate-x-[350%] transition-transform duration-700 ease-out" />
 
-    {/* Contenido */}
-    <div className="flex items-center justify-center gap-3 md:gap-4 relative z-10"> {/* Ajustar gap */}
-      <ShoppingCart className="w-6 h-6 md:w-7 md:h-7 group-hover:scale-125 transition-transform duration-500" /> {/* Ajustar tamaño del icono */}
-      <span className="drop-shadow-lg">Ver Productos</span>
-    </div>
-  </Button>
-</Link>
-       
-            </div>
+               
+                <div className="flex items-center justify-center gap-3 md:gap-4 relative z-10">
+                  <ShoppingCart className="w-6 h-6 md:w-7 md:h-7 group-hover:scale-125 transition-transform duration-500" /> 
+                  <span className="drop-shadow-lg">Ver Productos</span>
+                </div>
+              </Button>
+            </Link>
+
           </div>
-        
-      </section>
+        </div>
 
-      
+      </section> */}
+
+<HeroCarouselVip videoComponent={VideoPlaceholder} />
+
+
 
       {/* Products Showcase */}
       <section className="py-12 md:py-16 bg-gradient-card"> {/* Ajustar padding */}
@@ -91,10 +104,10 @@ const Index = () => {
 
           {/* Featured Products */}
           <div className="mb-10 md:mb-12"> {/* Ajustar margen */}
-            <div className="bg-primary text-primary-foreground text-center py-2 md:py-3 mb-6 md:mb-8 rounded-lg"> {/* Ajustar padding y margen */}
+            <div className="bg-gradient-to-r from-[#09573c] via-[#4fac05] to-[#2e901f] text-primary-foreground text-center py-2 md:py-3 mb-6 md:mb-8 rounded-lg"> {/* Ajustar padding y margen */}
               <h3 className="text-xl md:text-2xl font-bold">DESTACADO DE TEMPORADA</h3> {/* Ajustar tamaño del título */}
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8"> {/* Ajustar grid */}
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />

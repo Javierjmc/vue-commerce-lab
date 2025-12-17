@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ShoppingBag, ArrowLeft } from "lucide-react";
 import { calculateCartTotal } from "@/lib/cart";
+import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
+
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -101,6 +103,7 @@ const Cart = () => {
           </div>
         </div>
       </main>
+      <ChatbotWidget />
     </div>
   );
 };

@@ -13,7 +13,7 @@ const VideoTestimonial = ({ thumbnail, name, title, duration }: VideoTestimonial
 
   return (
     <article 
-      className="video-testimonial group"
+      className="video-testimonial group overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

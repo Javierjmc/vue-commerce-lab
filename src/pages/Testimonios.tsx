@@ -142,8 +142,7 @@ const Testimonios = () => {
 
             <Card className="p-8 bg-accent text-accent-foreground shadow-hover">
               <h3 className="text-2xl font-bold mb-4">Compromiso con la Salud</h3>
-              <ul className="space-y-3 text-lg">
-                <li>✓ 100% productos naturales certificados</li>
+              <ul className="space-y-3 text-lg">                
                 <li>✓ Seguimiento personalizado incluido</li>
                 <li>✓ Garantía de satisfacción total</li>
               </ul>
