@@ -1,10 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Truck, Shield, Heart } from "lucide-react";
-import React from 'react';
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedVideo } from '@cloudinary/react';
 import Layout from "@/layouts/Layout";
-import { Link } from "react-router-dom";
 import { ListaProductos, ProductoNutricional } from "../lib/productos";
 import ProductCard from "@/components/ProductCard";
 import { productCombos } from "@/lib/combos"; // Importar los combos

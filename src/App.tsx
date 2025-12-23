@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
@@ -16,6 +16,7 @@ import Blog from "./pages/Blog"; // Importar la página principal del Blog
 import BlogPost from "./pages/BlogPost"; // Importar la página de detalle del artículo
 import ComboDetail from "./pages/ComboDetail"; // Restaurar la importación de la página de detalle del Combo
 import ScrollToTop from "./components/ScrollToTop";
+import PrivateRoute from './components/auth/PrivateRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Naturdix from './pages/Naturdix';
@@ -28,9 +29,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
+      <ScrollToTop />
+      <Routes>
           <Route path="/" element={<Index />} />          
           <Route path="/tienda" element={<Tienda />} />
           <Route path="/nosotras" element={<Nosotras />} />
@@ -49,7 +49,6 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );

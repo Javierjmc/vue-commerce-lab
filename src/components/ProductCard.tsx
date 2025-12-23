@@ -56,11 +56,11 @@ const ProductCard = ({ product, viewMode = "grid" }: ProductCardProps) => {
           </div>
 
           {/* Category Badge */}
-          <div className="absolute top-4 right-4">
+          {/* <div className="absolute top-4 right-4">
             <span className="badge-category bg-green-100/90">
               {product.categoriaPorPatologia}
             </span>
-          </div>
+          </div> */}
 
           {/* Featured Badge */}
           {product.destacado && (

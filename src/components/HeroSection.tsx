@@ -85,13 +85,10 @@ const HeroSection = () => {
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              <button className="px-8 py-4 rounded-xl font-bold text-foreground gradient-gold shadow-gold hover:scale-105 transition-transform duration-300">
+              <a href="/naturdix" target="_blank" className="px-8 py-4 rounded-xl font-bold text-foreground gradient-gold shadow-gold hover:scale-105 transition-transform duration-300">
                 Conoce Naturdix
-              </button>
-              <button className="px-8 py-4 rounded-xl font-semibold text-primary-foreground border-2 border-primary-foreground/30 hover:bg-primary-foreground/10 hover:border-primary-foreground/50 transition-all duration-300">
-                Flor de Bach
-              </button>
-            </div>
+              </a>
+              </div>
           </div>
 
           {/* 360 Video Container */}

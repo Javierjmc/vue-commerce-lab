@@ -91,6 +91,11 @@ const Tienda = () => {
     navigate(`${location.pathname}?${params.toString()}`);
   };
 
+  const featuredProducts = useMemo(() => {
+    const shuffled = [...ListaProductos].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 3); // Selecciona 3 productos destacados aleatorios
+  }, []);
+
   const filteredProducts = useMemo(() => {
     let result = ListaProductos;
     const currentCategoryInUrl = searchParams.get("category") || "all";
@@ -184,6 +189,35 @@ const Tienda = () => {
           <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
             <path d="M0 120L48 108C96 96 192 72 288 60C384 48 480 48 576 54C672 60 768 72 864 78C960 84 1056 84 1152 78C1248 72 1344 60 1392 54L1440 48V120H1392C1344 120 1248 120 1152 120C1056 120 960 120 864 120C768 120 672 120 576 120C480 120 384 120 288 120C192 120 96 120 48 120H0Z" fill="oklch(92.8% 0.006 264.531)"/>
           </svg>
+        </div>
+      </section>
+
+      {/* Sección de Productos Destacados */ }
+      <section className="relative overflow-hidden py-4">
+        {/* Animated decorative elements for featured section */ }
+        <div className="absolute top-10 right-10 w-24 h-24 rounded-full bg-white/10 blur-2xl animate-float" />
+        <div className="absolute bottom-10 left-1/4 w-32 h-32 rounded-full bg-white/10 blur-3xl animate-float" style={{ animationDelay: '-2s' }} />
+
+        <div className="container relative px-4">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+              <Sparkles className="inline-block h-8 w-8 mr-2 text-primary/60" /> <span className="text-primary">Nuestros Favoritos</span>
+            </h2>
+            <p className="text-lg text-black/80 max-w-2xl mx-auto leading-relaxed">
+              Descubre nuestra selección especial de productos naturales de la más alta calidad, elegidos pensando en tu bienestar.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProducts.map((product, index) => (
+              <div
+                key={product.id}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <ProductCard product={product} viewMode="large" />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -407,7 +441,7 @@ const Tienda = () => {
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="pagination-btn"
+              className="bg-primary text-white hover:bg-primary/90 transition-all duration-300 rounded-full px-4 py-2 flex items-center gap-2"
             >
               <ChevronLeft className="h-4 w-4" />
               Anterior
@@ -432,7 +466,7 @@ const Tienda = () => {
             <button
               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="pagination-btn"
+              className="bg-primary text-white hover:bg-primary/90 transition-all duration-300 rounded-full px-4 py-2 flex items-center gap-2"
             >
               Siguiente
               <ChevronRight className="h-4 w-4" />
