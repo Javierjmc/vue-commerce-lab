@@ -169,7 +169,7 @@ const Tienda = () => {
             {/* Stats */}
             <div className="flex flex-wrap justify-center gap-4 md:gap-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               <div className="hero-stat min-w-[120px]">
-                <div className="text-3xl md:text-4xl font-bold text-white">{ListaProductos.length}+</div>
+                <div className="text-3xl md:text-4xl font-bold text-white">+500</div>
                 <div className="text-sm text-white/70 mt-1">Productos</div>
               </div>
               <div className="hero-stat min-w-[120px]">

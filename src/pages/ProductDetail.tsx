@@ -206,7 +206,7 @@ const ProductDetail = () => {
                   {product.titulo}
                 </h1>
 
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-lg text-gray-800 leading-relaxed">
                   {product.subtituloComplemento}
                 </p>
 

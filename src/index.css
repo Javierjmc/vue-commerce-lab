@@ -25,8 +25,8 @@ body {
     --primary-foreground: 0 0% 100%;
 
 
-    /* --secondary: 108 63% 33%; */
-    --secondary: 0 0% 35%;
+    /*--secondary: 108 63% 33%; */
+    /* --secondary: 0 0% 5%; */
     --secondary-foreground: 0 0% 100%;
 
     --accent: 86 96% 31%;
@@ -36,7 +36,7 @@ body {
     --destructive-foreground: 0 0% 100%;
 
     --muted: 120 20% 95%;
-    --muted-foreground: 0 0% 70%;
+    --muted-foreground: 0 0% 30%;
 
     --border: 0 0% 90%;
     --border-primary: 164 83% 35%;
