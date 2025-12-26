@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import TeamSection from "./tabs/TeamSection";
 import FAQSection from "./tabs/FAQSection";
 import GoogleMapsSection from "./tabs/GoogleMapsSection";
+import ValuesSection from "./tabs/ValuesSection";
 
 interface Tab {
   id: string;
@@ -13,6 +14,7 @@ interface Tab {
 }
 
 const tabs: Tab[] = [
+  { id: "valores", label: "Valores", icon: <FileText className="h-5 w-5" />, content: <ValuesSection /> },
   { id: "equipo", label: "Equipo", icon: <FileText className="h-5 w-5" />, content: <TeamSection /> },
   { id: "preguntas-frecuentes", label: "Preguntas Frecuentes", icon: <BarChart3 className="h-5 w-5" />, content: <FAQSection /> },
   { id: "ubicacion", label: "Ubicación", icon: <Bell className="h-5 w-5" />, content: <GoogleMapsSection /> },
@@ -33,7 +35,7 @@ export function GlassTabs() {
   return (
     <section className="w-full">
       {/* Tab Navigation */}
-      <div className="relative mb-6 rounded-xl bg-primary shadow-lg">
+      <div className="relative bg-primary shadow-lg overflow-hidden">
         <div className="flex relative">
           {tabs.map((tab, index) => {
             const isActive = activeTab === tab.id;
@@ -43,7 +45,7 @@ export function GlassTabs() {
                 ref={el => (tabRefs.current[index] = el)}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  "flex-1 flex items-center justify-center gap-2 px-4 py-8 text-sm font-semibold text-white transition-all duration-300 relative hover:scale-105",
+                  "flex-1 flex items-center justify-center gap-2 px-4 py-8 text-sm font-semibold text-white transition-all duration-300 relative hover:scale-105 hover:bg-white/10 overflow-hidden",
                   isActive ? "font-bold" : "text-white/80 hover:text-white"
                 )}
               >

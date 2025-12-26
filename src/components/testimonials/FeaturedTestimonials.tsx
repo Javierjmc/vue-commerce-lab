@@ -18,31 +18,31 @@ const videoTestimonials = [
 
 const textTestimonials = [
   {
-    name: "Laura Martínez",
+    name: "Yolanda Plaza",
     location: "Madrid, España",
-    story: "Después de años luchando con problemas digestivos, encontré en Vitasfera la solución natural que buscaba. Los productos no solo mejoraron mi digestión, sino que también me dieron una energía que no había sentido en años. ¡Gracias por cambiar mi vida!",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop",
+    story: "El trato siempre es muy bueno, se nota que tienen conocimiento sobre los productos que venden y sobre sus efectos en la salud, siempre te atienden con una sonrisa y son muy amables. Tuve que descambiar un producto y no me pusieron ningún problema, es más me asesoraron más sobre los otros productos. Tiene alimentación ecológica, miel, tes, huevos... Pocos herbolarios cuenta con tanta variedad lo cual se agradece, así como el asesoramiento y el trato. Y dispone de grandes marcas de vitaminas.",
+    image: "https://lh3.googleusercontent.com/a/ACg8ocIvLIGwas8rlpAjAjDyDsNtiPjip44G7FrwFI8R5Fbu2S7TDQ=w72-h72-p-rp-mo-ba5-br100",
     transformation: "Mejor digestión",
   },
   {
-    name: "Roberto González",
+    name: "ALCALA DE HENARES NOMASVELLO DEPILACIÓN",
     location: "Barcelona, España",
-    story: "Soy deportista amateur y buscaba algo natural para mejorar mi rendimiento. Los suplementos de Vitasfera me han ayudado a recuperarme mejor después del ejercicio y a mantener mi sistema inmune fuerte durante todo el año.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
+    story: "Encantada siempre de la atención y consejos recibidos y de poder aclarar cualquier duda. Siempre con gran variedad de productos. Muy buen trato y cercanía.",
+    image: "https://lh3.googleusercontent.com/a-/ALV-UjW9bPR3pulMd8Njo2e-L3UudTpFFa0zDVcDDFzqmSsWgIxpydj7=w72-h72-p-rp-mo-br100",
     transformation: "Más energía",
   },
   {
-    name: "Elena Pérez",
+    name: "Diana Calabuig",
     location: "Valencia, España",
-    story: "Como madre de tres hijos, el estrés y el cansancio eran mis compañeros diarios. Desde que incorporé los productos de Vitasfera a mi rutina, duermo mejor, tengo más paciencia y mi piel luce más radiante. Mi familia también ha notado el cambio.",
-    image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop",
+    story: "El mejor de Alcalá, lo recomiendo, buena atención, buen asesoramiento, quien nos a atendido un encanto. UN DIEZ",
+    image: "https://lh3.googleusercontent.com/a-/ALV-UjX1-VEIZZs_W7IzoafmAD9aEs0bdkNrSX3d71WRN1RSPN9emE-4=w72-h72-p-rp-mo-ba3-br100",
     transformation: "Mejor sueño",
   },
   {
-    name: "Miguel Ángel Ruiz",
+    name: "Ivan Causapie",
     location: "Sevilla, España",
-    story: "A mis 60 años pensaba que ya no había solución para mis dolores articulares. Los productos naturales de Vitasfera me han dado una nueva oportunidad. Ahora puedo jugar con mis nietos sin limitaciones.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop",
+    story: "Solo decir gracias, desde la atención vía whatsapp a la presencial de 10, rápidas, atentas , un trato excelente, si buscas servicio, calidad precio, no lo dudes.",
+    image: "https://lh3.googleusercontent.com/a-/ALV-UjVgFR1b_C1ezqPeEiOEpwnHX7Ec349sh1TG4fS8pSqpOxiW6C8N=w72-h72-p-rp-mo-ba4-br100",
     transformation: "Más movilidad",
   },
 ];

@@ -20,11 +20,10 @@ const HeroSection = () => {
       <div className="absolute bottom-40 right-20 w-48 h-48 rounded-full bg-primary/10 blur-3xl animate-float delay-300" />
       <div className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-gold/10 blur-2xl animate-float delay-500" />
       
-      <div className="relative z-10 container max-w-6xl mx-auto px-4 py-12 lg:py-20">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 min-h-[calc(100vh-6rem)]">
-          
+      <div className="relative z-10 container max-w-7xl mx-auto px-4 py-12 lg:py-20">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-2 min-h-[calc(100vh-6rem)] ">          
           {/* Text Content */}
-          <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
+          <div className="text-center lg:text-left order-2 lg:order-1 w-[40%]">
             {/* Anniversary badge */}
             <div 
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6 transition-all duration-700 ${
@@ -69,14 +68,6 @@ const HeroSection = () => {
                   no le haga perder su esencia.
                 </strong>
               </p>
-
-              {/* <p>
-                Ofrecemos nuestra propia marca de confianza,{' '}
-                <span className="text-gold font-bold">Naturdix,</span> y fórmulas personalizadas de{' '}
-                <span className="text-gold font-bold">Flor de Bach</span> que aportan gran detalle 
-                y beneficios a la salud.
-              </p> */}
-
             </div>
 
             {/* CTA Buttons */}
@@ -93,7 +84,7 @@ const HeroSection = () => {
 
           {/* 360 Video Container */}
           <div 
-            className={`flex-1 w-full max-w-2xl order-1 lg:order-2 transition-all duration-1000 delay-300 ${
+            className={`flex-1 w-[60%] max-w-2xl order-1 lg:order-2 transition-all duration-1000 delay-300 ${
               isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
             }`}
           >
