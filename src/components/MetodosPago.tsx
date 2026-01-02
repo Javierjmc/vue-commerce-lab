@@ -13,19 +13,19 @@ import paypalLogo from "../assets/logo-paypal.png";
               <img
                 src={visaLogo}
                 alt="Visa"
-                className="h-16 w-auto hover:opacity-100 transition"
+                className="h-12 w-auto hover:opacity-100 transition"
               />
 
               <img
                 src={masterLogo}
                 alt="MasterCard"
-                className="h-16 w-auto hover:opacity-100 transition"
+                className="h-12 w-auto hover:opacity-100 transition"
               />
 
               <img
                 src={paypalLogo}
                 alt="PayPal"
-                className="h-16 w-auto  hover:opacity-100 transition"
+                className="h-12 w-auto  hover:opacity-100 transition"
               />
             </div>
           </div>

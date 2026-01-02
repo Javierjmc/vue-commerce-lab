@@ -45,7 +45,7 @@ export function GlassTabs() {
                 ref={el => (tabRefs.current[index] = el)}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  "flex-1 flex items-center justify-center gap-2 px-4 py-8 text-sm font-semibold text-white transition-all duration-300 relative hover:scale-105 hover:bg-white/10 overflow-hidden",
+                  "flex-1 flex items-center justify-center gap-2 px-4 py-8 text-xl font-semibold text-white transition-all duration-300 relative hover:scale-105 hover:bg-white/10 overflow-hidden",
                   isActive ? "font-bold" : "text-white/80 hover:text-white"
                 )}
               >

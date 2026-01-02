@@ -32,20 +32,9 @@ interface HeroCarouselProps {
   className?: string;
 }
 
-const slides: Slide[] = [
-  {
-    id: 1,
-    type: 'video',
-    src: '',
-    overlay: {
-      title: '¡Quema la Grasa y',
-      titleHighlight: 'Controla tu Peso!',
-      subtitle: 'Productos naturales ricos en fibra que transforman tu bienestar',
-      cta: { text: 'Explorar Productos', href: '/tienda' },
-    },
-  },
-  { id: 2, type: 'image', src: bannerAnoNuevo, alt: 'Regalos especiales', overlay: { cta: { text: 'Descargar Agenda', href: '/tienda' } } },
-  { id: 3, type: 'image', src: bannerProductosNaturdix, alt: 'Nuevas novedades', overlay: { cta: { text: 'Explorar Productos', href: 'https://recursos-gtc.vercel.app/assets/_Agenda%20Vitasfera%202026.pdf' } } },
+const slides: Slide[] = [  
+  { id: 1, type: 'image', src: bannerAnoNuevo, alt: 'Regalos especiales', overlay: { cta: { text: 'Descargar Agenda', href: '/tienda' } } },
+  { id: 2, type: 'image', src: bannerProductosNaturdix, alt: 'Nuevas novedades', overlay: { cta: { text: 'Explorar Productos', href: 'https://recursos-gtc.vercel.app/assets/_Agenda%20Vitasfera%202026.pdf' } } },
 
 ];
 
