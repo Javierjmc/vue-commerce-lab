@@ -33,8 +33,8 @@ interface HeroCarouselProps {
 }
 
 const slides: Slide[] = [  
-  { id: 1, type: 'image', src: bannerAnoNuevo, alt: 'Regalos especiales', overlay: { cta: { text: 'Descargar Agenda', href: '/tienda' } } },
-  { id: 2, type: 'image', src: bannerProductosNaturdix, alt: 'Nuevas novedades', overlay: { cta: { text: 'Explorar Productos', href: 'https://recursos-gtc.vercel.app/assets/_Agenda%20Vitasfera%202026.pdf' } } },
+  { id: 1, type: 'image', src: bannerAnoNuevo, alt: 'Regalos especiales', overlay: { cta: { text: 'Descargar Agenda', href: '/https://recursos-gtc.vercel.app/assets/_Agenda%20Vitasfera%202026.pdf' } } },
+  { id: 2, type: 'image', src: bannerProductosNaturdix, alt: 'Nuevas novedades', overlay: { cta: { text: 'Explorar Productos', href: '/tienda' } } },
 
 ];
 
