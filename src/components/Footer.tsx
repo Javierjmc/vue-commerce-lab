@@ -20,7 +20,7 @@ const Footer = () => {
 
         {/* LOGO + DESCRIPCIÓN + REDES */}
         <div className="col-span-1">
-          <img src={logoBlanco} alt="Logo Vitasfera" className="h-16 md:h-20 mb-6" />
+          <img src={logoBlanco} alt="Logo Vitasfera" className="h-16 md:h-32 mb-6" />
 
           <p className="text-sm opacity-90 leading-relaxed pr-0 md:pr-6">
             Productos naturales y soluciones de bienestar. Envíos rápidos,
@@ -91,7 +91,7 @@ const Footer = () => {
             Recibe descuentos, novedades y contenido exclusivo.
           </p>
 
-          <form className="flex flex-col gap-3">
+          <form className="flex flex-col gap-3 text-black">
             <Input
               type="email"
               placeholder="Tu email"
