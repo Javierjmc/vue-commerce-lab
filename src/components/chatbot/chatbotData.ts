@@ -85,7 +85,7 @@ export const staticResponses: Record<string, string> = {
   'shipping': '⏱️ **Tiempos y Costos de Envío:**\n\n• Península: 24-48 horas laborables\n• Baleares: 3-5 días laborables\n• Canarias: 5-7 días laborables\n\n✨ **¡Envío GRATIS en Península a partir de 20€!**\n\nSi pides antes de las 16:00, tu pedido sale ese mismo día.',
   'promotions': '🏷️ **¡Sí! Tenemos ofertas activas para tu Bienestar Natural.**\n\nActualmente puedes encontrar:\n• Descuentos en packs de suplementos\n• Ofertas especiales en productos Naturdix\n• Promociones de temporada\n\nVisita nuestra web para ver todas las ofertas vigentes o pregúntame por un producto específico.',
   'advisor': '🧑‍💻 **Conectando con un Asesor**\n\nNuestro equipo de expertos en Bienestar Natural está disponible para ayudarte de forma personalizada.\n\n📱 WhatsApp: Envíanos un mensaje y te atenderemos lo antes posible.\n📧 Email: info@vitasfera.com\n\n¡Estaremos encantados de guiarte en tu camino hacia el bienestar!',
-  'product-detail': '¡Excelente elección! En Vitásfera tenemos productos naturales de alta calidad para esa necesidad. Te recomiendo visitar nuestra tienda online para ver todas las opciones disponibles, o si prefieres una recomendación más personalizada, puedo conectarte con uno de nuestros expertos.',
+  'product-detail': '¡Excelente elección! En Vitásfera tenemos productos naturales de alta calidad para esa necesidad. Te recomiendo visitar nuestra <a href="/products" target="_blank" rel="noopener noreferrer">tienda online</a> para ver todas las opciones disponibles, o si prefieres una recomendación más personalizada, puedo conectarte con uno de nuestros expertos.',
 };
 
 export function getFlowData(state: ChatFlowState): { message: string; options?: ChatOption[] } {
@@ -122,7 +122,7 @@ export function getFlowData(state: ChatFlowState): { message: string; options?: 
         const products = getProductsByCategory(category);
         let productsMessage = `Aquí tienes algunos productos en nuestra categoría de ${category.charAt(0).toUpperCase() + category.slice(1)}:\n\n`;
         products.forEach(product => {
-          productsMessage += `**${product.titulo}**\n`;
+          productsMessage += `**<a href="/products/${product.titulo.toLowerCase().replace(/ /g, '-')}" target="_blank" rel="noopener noreferrer">${product.titulo}</a>**\n`;
           if (product.imagenes && product.imagenes.length > 0) {
             productsMessage += `<img src="${product.imagenes[0]}" alt="${product.titulo}" width="100"/><br/>\n`;
           }

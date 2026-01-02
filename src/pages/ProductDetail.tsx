@@ -302,7 +302,7 @@ const ProductDetail = () => {
                 <div className="grid grid-cols-2 gap-3 pt-3 border-t border-border">
                   <div className="flex items-center gap-2 text-sm">
                     <Truck className="w-5 h-5 text-secondary" />
-                    <span>Envío gratis +49€</span>
+                    <span>Envío gratis +60€</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Shield className="w-5 h-5 text-secondary" />

@@ -24,11 +24,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 shadow-2xl transition-all duration-300">
+    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/80 shadow-2xl transition-all duration-300">
       {/* 1. Cinta de ofertas - Estilos mejorados para un color sutil y animación si es necesario */}
-      <TickerOfertas />
+
+      <div className="text-center text-sm text-primary font-bold bg-primary text-primary-foreground py-3">Envío gratis +60€</div>
+
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 w-full">
         
         {/* ========================================================= */}
         {/* FILA SUPERIOR: Búsqueda Avanzada + Iconos (Login/Carrito) */}
@@ -36,9 +38,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-14 md:h-16 py-2 border-b border-border/50 transition-all duration-300">
           
           {/* Búsqueda Avanzada (Desktop/Tablet) */}
-          <div className="hidden md:flex flex-1 max-w-2xl mx-auto items-center">
-             <AdvancedSearchBar /> 
-             {/* Nota: AdvancedSearchBar necesita aceptar la prop 'className' */}
+          <div className="hidden md:flex flex-1 mx-auto items-center">
+             <AdvancedSearchBar />              
           </div>
           
           {/* Iconos: Carrito + Login */}

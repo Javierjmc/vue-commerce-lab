@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 const ofertas = [
   "🔥 50% de descuento en todos los productos",
-  "🚚 Envío gratis en pedidos mayores a $50!",  
+  "🚚 Envío gratis en pedidos mayores a 60€!",  
 ];
 
 const TickerOfertas = () => {

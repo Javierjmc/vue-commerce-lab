@@ -7,6 +7,7 @@ import ProductCard from "@/components/ProductCard";
 import { productCombos } from "@/lib/combos"; // Importar los combos
 import ComboCard from "@/components/ComboCard"; // Importar el componente ComboCard
 import HeroCarouselVip from '@/components/HeroCarouselVip';
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const products: ProductoNutricional[] = ListaProductos.filter(p => p.destacado);
@@ -145,9 +146,9 @@ const Index = () => {
           <p className="text-base md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto"> {/* Ajustar tamaño y margen del párrafo */}
             Únete a miles de personas que ya están viviendo mejor con nuestros productos naturales
           </p>
-          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-glow py-3 px-8 text-lg"> {/* Ajustar padding y texto */}
+          <Link to="/tienda" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-glow py-3 px-8 text-lg rounded-lg"> {/* Ajustar padding y texto */}
             Comenzar Ahora
-          </Button>
+          </Link>
         </div>
       </section>
     </Layout>

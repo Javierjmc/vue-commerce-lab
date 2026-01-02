@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { MessageCircle, X, Send, RotateCcw } from 'lucide-react';
+import { MessageCircle, X, Send, RotateCcw, Phone } from 'lucide-react';
 import { ChatMessage, ChatOption, ChatFlowState } from './ChatbotTypes';
 import { ChatMessageComponent } from './ChatMessage';
 import { getFlowData, staticResponses } from './chatbotData';
@@ -126,9 +126,18 @@ export function ChatbotWidget() {
     ]);
     setInputValue('');
 
-    // Generic response for free text input
-    addBotMessage(
-      'Gracias por tu mensaje. Para darte la mejor atención, te recomiendo seleccionar una de las opciones del menú o contactar directamente con nuestros expertos.',
+    const lowerCaseMessage = inputValue.toLowerCase();
+    let botResponseContent = '';
+
+    if (lowerCaseMessage.includes("vitamina c")) {
+      botResponseContent = "La <a href='/products/vitamina-d3-k2' target='_blank' rel='noopener noreferrer'>vitamina D3 + K2</a> y el <a href='/products/zinc' target='_blank' rel='noopener noreferrer'>zinc</a> potencian el efecto de la vitamina C.";
+    } else if (lowerCaseMessage.includes("articulaciones")) {
+      botResponseContent = "Genial, tenemos <a href='/products/colageno' target='_blank' rel='noopener noreferrer'>colágeno</a>, <a href='/products/curcuma' target='_blank' rel='noopener noreferrer'>cúrcuma</a> y <a href='/products/magnesio' target='_blank' rel='noopener noreferrer'>magnesio</a> que funcionan muy bien juntos para las articulaciones.";
+    } else {
+      botResponseContent = 'Gracias por tu mensaje. Para darte la mejor atención, te recomiendo seleccionar una de las opciones del menú o contactar directamente con nuestros expertos.';
+    }
+
+    addBotMessage(botResponseContent,
       [
         { id: 'menu', icon: '📋', label: 'Ver Menú Principal', action: 'main-menu' },
         { id: 'advisor', icon: '🧑‍💻', label: 'Hablar con un Asesor', action: 'advisor' },
@@ -198,20 +207,29 @@ export function ChatbotWidget() {
               <h3 className="text-primary-foreground font-semibold">Clara</h3>
               <p className="text-primary-foreground/70 text-sm">Asistente de Bienestar Natural</p>
             </div>
-            <button
-              onClick={resetChat}
-              className="p-2 hover:bg-primary-foreground/10 rounded-full transition-colors"
-              aria-label="Reiniciar chat"
-            >
-              <RotateCcw className="w-5 h-5 text-primary-foreground" />
-            </button>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-2 hover:bg-primary-foreground/10 rounded-full transition-colors"
-              aria-label="Cerrar chat"
-            >
-              <X className="w-5 h-5 text-primary-foreground" />
-            </button>
+            <div className="ml-auto flex items-center gap-2">
+              <button
+                onClick={() => window.open("https://wa.me/XXXXXXXXXXX", "_blank")}
+                className="p-2 hover:bg-primary-foreground/10 rounded-full transition-colors"
+                aria-label="Contactar por WhatsApp"
+              >
+                <Phone className="w-5 h-5 text-primary-foreground" />
+              </button>
+              <button
+                onClick={resetChat}
+                className="p-2 hover:bg-primary-foreground/10 rounded-full transition-colors"
+                aria-label="Reiniciar chat"
+              >
+                <RotateCcw className="w-5 h-5 text-primary-foreground" />
+              </button>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2 hover:bg-primary-foreground/10 rounded-full transition-colors"
+                aria-label="Cerrar chat"
+              >
+                <X className="w-5 h-5 text-primary-foreground" />
+              </button>
+            </div>
           </div>
 
           {/* Messages */}

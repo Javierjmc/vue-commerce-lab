@@ -1,8 +1,5 @@
 import { Link } from "react-router-dom";
-import {
-  Facebook,
-  Instagram,
-  Youtube,
+import {  
   Mail,
   Phone,
 } from "lucide-react";
@@ -13,6 +10,8 @@ import masterLogo from "../assets/mastercard.png";
 import paypalLogo from "../assets/logo-paypal.png";
 import { Input } from "@/components/ui/input";
 import { ButtonNaturdix } from "@/components/naturdix/ButtonNaturdix";
+import { RedesSociales } from "./RedesSociales";
+import { MetodosPago } from "./MetodosPago";
 
 const Footer = () => {
   return (
@@ -27,18 +26,7 @@ const Footer = () => {
             Productos naturales y soluciones de bienestar. Envíos rápidos,
             atención personalizada y seguridad en tu compra.
           </p>
-
-          <div className="flex items-center gap-4 mt-6">
-            <a href="#" aria-label="facebook" className="hover:text-secondary transition">
-              <Facebook className="h-5 w-5" />
-            </a>
-            <a href="#" aria-label="instagram" className="hover:text-secondary transition">
-              <Instagram className="h-5 w-5" />
-            </a>
-            <a href="#" aria-label="youtube" className="hover:text-secondary transition">
-              <Youtube className="h-5 w-5" />
-            </a>
-          </div>
+          <MetodosPago />          
         </div>
 
         {/* ENLACES PRINCIPALES */}
@@ -61,11 +49,11 @@ const Footer = () => {
           <ul className="space-y-4 text-sm">
             <li className="flex items-center gap-3">
               <Mail className="h-4 w-4 text-accent" />
-              soporte@vitasfera.com
+              info@herbolariovitasfera.com
             </li>
             <li className="flex items-center gap-3">
               <Phone className="h-4 w-4 text-accent" />
-              +58 123 456 7890
+              91 882 85 19
             </li>
 
             <li>
@@ -93,6 +81,8 @@ const Footer = () => {
 
         {/* SUSCRIPCIÓN + MÉTODOS DE PAGO */}
         <div className="mt-8 md:mt-0 lg:mt-0">
+          <RedesSociales />
+
           <h3 className="font-semibold text-lg mb-5 text-secondary">
             Mantente Informado
           </h3>
@@ -117,32 +107,7 @@ const Footer = () => {
             </ButtonNaturdix>
           </form>
 
-          {/* MÉTODOS DE PAGO (solo logos) */}
-          <div className="mt-10">
-            <h3 className="font-semibold text-lg mb-4 text-secondary">
-              Métodos de Pago
-            </h3>
 
-            <div className="flex items-center gap-5">
-              <img
-                src={visaLogo}
-                alt="Visa"
-                className="h-8 w-auto opacity-80 hover:opacity-100 transition"
-              />
-
-              <img
-                src={masterLogo}
-                alt="MasterCard"
-                className="h-8 w-auto opacity-80 hover:opacity-100 transition"
-              />
-
-              <img
-                src={paypalLogo}
-                alt="PayPal"
-                className="h-8 w-auto opacity-80 hover:opacity-100 transition"
-              />
-            </div>
-          </div>
         </div>
       </div>
 

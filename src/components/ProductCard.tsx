@@ -39,29 +39,16 @@ const ProductCard = ({ product, viewMode = "grid" }: ProductCardProps) => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
           
           {/* Quick view button */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
+          <div className="absolute z-50 inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
             <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-              <Button
-                size="sm"
-                className="gap-2 rounded-full px-6 bg-emerald-200/80 text-foreground hover:bg-emerald-200 shadow-lg backdrop-blur-sm"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-              >
+              <Link to={`/product/${product.id}`} className="inline-flex items-center gap-2 px-4 py-2 bg-white/90 hover:bg-emerald-100 text-sm font-medium rounded-full shadow-md hover:shadow-lg transition-all duration-300">
+               
                 <Eye className="h-4 w-4" />
                 Ver detalles
-              </Button>
+              </Link>
             </div>
           </div>
-
-          {/* Category Badge */}
-          {/* <div className="absolute top-4 right-4">
-            <span className="badge-category bg-green-100/90">
-              {product.categoriaPorPatologia}
-            </span>
-          </div> */}
-
+     
           {/* Featured Badge */}
           {product.destacado && (
             <div className="absolute top-4 left-4">

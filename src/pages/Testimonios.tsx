@@ -45,7 +45,7 @@ const Testimonios = () => {
         </div>
       </section>
 
-      <HeroSection />
+      {/* <HeroSection /> */}
       <FeaturedTestimonials />
       <ShareStorySection />
 
@@ -54,7 +54,7 @@ const Testimonios = () => {
       
 
       {/* Community Section */}
-      <section className="py-16 bg-gradient-card">
+      {/* <section className="py-16 bg-gradient-card">
         <div className="container mx-auto px-4">
           <div className="bg-primary text-primary-foreground text-center py-4 mb-12 rounded-lg">
             <h2 className="text-3xl font-bold">NUESTRA COMUNIDAD</h2>
@@ -99,10 +99,10 @@ const Testimonios = () => {
             <CarouselNext />
           </Carousel>
         </div>
-      </section>
+      </section> */}
 
       {/* Success Stories Section */}
-      <section className="py-16 bg-background">
+      {/* <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-4xl font-bold text-primary mb-4">
@@ -132,7 +132,7 @@ const Testimonios = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
     </Layout>
   );
 };

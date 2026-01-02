@@ -49,7 +49,7 @@ const textTestimonials = [
 
 const FeaturedTestimonials = () => {
   return (
-    <section className="py-16 md:py-24 bg-background border-t-0">
+    <section className="py-16 md:py-24 border-t-0">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <div className="text-center mb-12">

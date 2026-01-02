@@ -8,6 +8,8 @@ import { cn } from '@/lib/utils';
 import bannerRegalo from '@/assets/2.png';
 import bannerNovedades from '@/assets/3.png';
 import bannerCalidez from '@/assets/4.png';
+import bannerAnoNuevo from '@/assets/bg-hero-5.jpg';
+import bannerProductosNaturdix from '@/assets/bg-hero-6.png';
 
 interface Slide {
   id: number;
@@ -42,9 +44,9 @@ const slides: Slide[] = [
       cta: { text: 'Explorar Productos', href: '/tienda' },
     },
   },
-  { id: 2, type: 'image', src: bannerRegalo, alt: 'Regalos especiales', overlay: { cta: { text: 'Explorar Productos', href: '/tienda' } } },
-  { id: 3, type: 'image', src: bannerNovedades, alt: 'Nuevas novedades', overlay: { cta: { text: 'Explorar Productos', href: '/tienda' } } },
-  { id: 4, type: 'image', src: bannerCalidez, alt: 'Regala calidez', overlay: { cta: { text: 'Explorar Productos', href: '/tienda' } } },
+  { id: 2, type: 'image', src: bannerAnoNuevo, alt: 'Regalos especiales', overlay: { cta: { text: 'Descargar Agenda', href: '/tienda' } } },
+  { id: 3, type: 'image', src: bannerProductosNaturdix, alt: 'Nuevas novedades', overlay: { cta: { text: 'Explorar Productos', href: 'https://recursos-gtc.vercel.app/assets/_Agenda%20Vitasfera%202026.pdf' } } },
+
 ];
 
 const HeroCarouselVip: React.FC<HeroCarouselProps> = ({ videoComponent, className }) => {
@@ -84,7 +86,7 @@ const HeroCarouselVip: React.FC<HeroCarouselProps> = ({ videoComponent, classNam
                 aspect-[13/4]
                 min-h-[320px]
                 md:min-h-[400px]
-                lg:min-h-[460px]
+                lg:min-h-[550px]
               "
             >
               {/* VIDEO SLIDE */}

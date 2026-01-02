@@ -10,7 +10,7 @@ import {
   SheetClose,
   SheetFooter,
 } from '@/components/ui/sheet';
-import { MessageSquareText, Send, X, MessageCircle } from 'lucide-react';
+import { MessageSquareText, Send, X, MessageCircle, Phone } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea'; // Importar el componente Textarea
@@ -33,12 +33,12 @@ const Chatbot: React.FC = () => {
   const getBotResponse = (userMessage: string): string => {
     const lowerCaseMessage = userMessage.toLowerCase();
 
-    // Lógica para upselling y cross-selling (Tarea 2.4 - Aún no implementada completamente)
+    // Lógica para upselling y cross-selling con enlaces a productos
     if (lowerCaseMessage.includes("vitamina c")) {
-      return "La vitamina D3 + K2 y el zinc potencian el efecto de la vitamina C.";
+      return "La <a href='/products/vitamina-d3-k2' target='_blank' rel='noopener noreferrer'>vitamina D3 + K2</a> y el <a href='/products/zinc' target='_blank' rel='noopener noreferrer'>zinc</a> potencian el efecto de la vitamina C.";
     }
     if (lowerCaseMessage.includes("articulaciones")) {
-      return "Genial, tenemos colágeno, cúrcuma y magnesio que funcionan muy bien juntos para las articulaciones.";
+      return "Genial, tenemos <a href='/products/colageno' target='_blank' rel='noopener noreferrer'>colágeno</a>, <a href='/products/curcuma' target='_blank' rel='noopener noreferrer'>cúrcuma</a> y <a href='/products/magnesio' target='_blank' rel='noopener noreferrer'>magnesio</a> que funcionan muy bien juntos para las articulaciones.";
     }
 
     // Buscar coincidencias en las FAQ
@@ -91,6 +91,14 @@ const Chatbot: React.FC = () => {
       <SheetContent side="right" className="w-[350px] sm:w-[400px] flex flex-col h-full bg-background p-0 border-l border-border-primary shadow-xl">
         <SheetHeader className="bg-primary text-primary-foreground p-4 flex-row items-center justify-between shadow-md">
           <SheetTitle className="text-xl font-bold">Asistente Vitasfera</SheetTitle>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-primary-foreground hover:bg-primary/80"
+            onClick={() => window.open("https://wa.me/XXXXXXXXXXX", "_blank")}
+          >
+              <Phone className="h-5 w-5" />
+          </Button>
           <SheetClose asChild>
             <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/80">
               <X className="h-5 w-5" />
@@ -107,7 +115,7 @@ const Chatbot: React.FC = () => {
                 <div
                   className={`max-w-[80%] p-3 rounded-xl shadow-sm ${message.sender === 'user' ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-secondary/20 text-foreground rounded-bl-none'}`}
                 >
-                  {message.text}
+                  <span dangerouslySetInnerHTML={{ __html: message.text }} />
                 </div>
               </div>
             ))}
@@ -131,14 +139,6 @@ const Chatbot: React.FC = () => {
               <Send className="h-4 w-4" />
             </Button>
           </div>
-          {/* <Button
-            variant="default"
-            className="w-full gap-2 bg-accent text-accent-foreground hover:bg-accent/90 rounded-full shadow-md"
-            onClick={() => window.open("https://wa.me/XXXXXXXXXXX", "_blank")}
-          >
-            <MessageCircle className="h-5 w-5" />
-            Contactar por WhatsApp
-          </Button> */}
         </SheetFooter>
       </SheetContent>
     </Sheet>
