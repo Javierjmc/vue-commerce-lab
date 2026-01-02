@@ -120,7 +120,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-10 md:mb-16"> {/* Ajustar margen */}
             <h2 className="text-4xl md:text-6xl font-extrabold text-primary mb-4 md:mb-6 leading-tight"> {/* Ajustar tamaño del título */}
-              Ofertas Exclusivas en Combos
+              Ofertas Exclusivas en Pack
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto"> {/* Ajustar tamaño del párrafo */}
               Descubre nuestras combinaciones perfectas para un bienestar completo a precios irresistibles.
