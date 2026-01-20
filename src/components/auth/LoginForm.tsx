@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       setEmail('');
       setPassword('');
       // Redirigir a la página deseada
-      navigate('/dashboard'); // Cambia esta ruta si es necesario
+      navigate('/'); // Cambia esta ruta si es necesario
     } catch (err: any) {
       setError(err.message || 'Email o contraseña incorrectos.');
     }
