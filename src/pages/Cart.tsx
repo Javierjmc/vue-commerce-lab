@@ -1,5 +1,7 @@
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/hooks/useCart";
+import { CartItem as CartItemType } from "@/lib/cart";
 import Navbar from "@/components/Navbar";
 import CartItem from "@/components/CartItem";
 import { Button } from "@/components/ui/button";
@@ -12,10 +14,24 @@ import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { cart, clearCart } = useCart();
+  const { cart, clearCart, removeFromCart } = useCart();
+  const [ items, setItems ] = useState<CartItemType[]>(cart);
   const total = calculateCartTotal(cart);
   const shipping = cart.length > 0 ? 10 : 0;
   const finalTotal = total + shipping;
+
+  console.log( cart )
+
+  useEffect(() => {
+    if( items.length !== 0 ) return
+    setItems(cart);
+  }, [cart]);
+
+  const handleRemove = (id: string) => {
+    console.log('remove ', id);
+    setItems((prevItems) => prevItems.filter((item) => item.id.toString() !== id));
+    removeFromCart(id);
+  }
 
   if (cart.length === 0) {
     return (
@@ -59,8 +75,8 @@ const Cart = () => {
           <div className="lg:col-span-2">
             <h1 className="mb-6 text-3xl font-bold">Carrito de compras</h1>
             <div className="space-y-4">
-              {cart.map((item) => (
-                <CartItem key={item.id} item={item} />
+              {items.map((item) => (
+                <CartItem key={item.id} item={item} onRemove={handleRemove} />
               ))}
             </div>
             <Button

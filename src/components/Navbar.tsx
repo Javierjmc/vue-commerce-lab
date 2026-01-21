@@ -1,18 +1,23 @@
-import { useState } from "react";
-import { ShoppingCart, Menu, X, User } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { ShoppingCart, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { getCartItemCount } from "@/lib/cart";
 import { useCart } from "@/hooks/useCart";
-import TickerOfertas from "./TickerOfertas";
+import UserMenu from "@/components/UserMenu";
 import logo from "../assets/logo-herbolario.png";
 import AdvancedSearchBar from "./AdvancedSearchBar";
 
 const Navbar = () => {
-  const { cart } = useCart();
-  const itemCount = getCartItemCount(cart);
+  const { cart, count:itemCount } = useCart();
+  const [_itemCount, setItemCount] = useState(0);
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+
+  useEffect(()=>{
+      const count = getCartItemCount(cart);
+      console.log("Actualizando itemCount en Navbar:", count);
+      setItemCount(count);
+  },[cart])
 
   const navLinks = [
     { name: "Inicio", to: "/" },
@@ -45,14 +50,8 @@ const Navbar = () => {
           {/* Iconos: Carrito + Login */}
           <div className="flex items-center gap-2 md:gap-4 ml-auto">
             
-            {/* Icono de Usuario/Login */}
-            <Link
-              to="/login"
-              aria-label="Iniciar sesión"
-              className="p-2 md:p-3 rounded-full text-foreground/80 hover:bg-muted hover:text-primary transition-all duration-300 transform hover:scale-105"
-            >
-              <User className="h-5 w-5 md:h-6 md:w-6" />
-            </Link>
+            {/* Menú de Usuario */}
+            <UserMenu />
 
             {/* Icono de Carrito */}
             <Link
@@ -136,14 +135,9 @@ const Navbar = () => {
 
             {/* Opciones de Login y Carrito (con texto) */}
             <div className="flex flex-col gap-3 pt-4 border-t border-border mt-4">
-              <Link
-                to="/login"
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg text-base font-medium transition-colors duration-300 hover:bg-muted hover:text-primary"
-              >
-                <User className="h-6 w-6" />
-                <span>Iniciar sesión</span>
-              </Link>
+              <div className="block md:hidden">
+                <UserMenu />
+              </div>
 
               <Link
                 to="/cart"

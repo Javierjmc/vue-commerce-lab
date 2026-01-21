@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -10,13 +10,24 @@ import { ChatbotWidget } from '@/components/chatbot/ChatbotWidget';
 import { useAuth } from '@/context/AuthContext';
 
 const Login: React.FC = () => {
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  useEffect(()=>{
+    if( user ) {
+      user.getIdToken().then(token => {
+        console.log( 'token', token )
+        localStorage.setItem('user-token', token);
+        navigate('/');
+      })
+    }
+  },[])
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +40,7 @@ const Login: React.FC = () => {
       setEmail('');
       setPassword('');
       // Redirigir a la página deseada
-      navigate('/'); // Cambia esta ruta si es necesario
+      //navigate('/'); // Cambia esta ruta si es necesario
     } catch (err: any) {
       setError(err.message || 'Email o contraseña incorrectos.');
     }

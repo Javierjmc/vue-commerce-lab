@@ -14,6 +14,10 @@ import {
 export interface CartItem extends ProductoNutricional {
   quantity: number;
   image: string;
+  name?: string;  // Mapeado de producto
+  price?: number; // Mapeado de pvp
+  category?: string; // Mapeado de categoriaPorPatologia
+  stock?: number; // Stock fijo
 }
 
 const CART_STORAGE_KEY = "ecommerce_cart";

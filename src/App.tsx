@@ -21,6 +21,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Naturdix from './pages/Naturdix';
 import Tienda from "./pages/Tienda";
+import Dashboard from './pages/Dashboard';
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/naturdix" element={<Naturdix />} />
+          <Route path="/dashboard" element={<Dashboard />} /> {/* Ruta del Dashboard */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
