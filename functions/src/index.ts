@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { stripe, STRIPE_CONFIG } from "./config/stripe";
+import * as paypalFunctions from "./paypal";
 
 // Inicializar Firebase Admin
 admin.initializeApp();
@@ -316,3 +317,10 @@ async function handlePaymentCanceled(paymentIntent: any) {
     console.error(`Error updating order ${orderId}:`, error);
   }
 }
+
+// ========== EXPORTAR FUNCIONES PAYPAL ==========
+export const {
+  createPayPalOrder,
+  capturePayPal,
+  getUserPayPalOrders,
+} = paypalFunctions;

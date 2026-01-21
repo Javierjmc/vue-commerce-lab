@@ -1,10 +1,12 @@
 # Firebase Cloud Functions - Vue Commerce Lab
 
-Funciones serverless para procesar pagos con Stripe de forma segura.
+Funciones serverless para procesar pagos seguros con **Stripe** y **PayPal**.
 
 ## 📋 Funciones disponibles
 
-### 1. `createPaymentIntent` (Callable)
+### Stripe
+
+#### 1. `createPaymentIntent` (Callable)
 Crea un PaymentIntent en Stripe y guarda la orden en Firestore.
 
 **Parámetros:**
@@ -28,25 +30,80 @@ Crea un PaymentIntent en Stripe y guarda la orden en Firestore.
 }
 ```
 
-### 2. `confirmPayment` (Callable)
-Confirma el estado de un pago.
+#### 2. `confirmPayment` (Callable)
+Confirma el estado de un pago en Stripe.
 
-### 3. `getUserOrders` (Callable)
+#### 3. `getUserOrders` (Callable)
 Obtiene todas las órdenes del usuario autenticado.
 
-### 4. `stripeWebhook` (HTTP)
+#### 4. `stripeWebhook` (HTTP)
 Endpoint para recibir webhooks de Stripe.
+
+### PayPal
+
+#### 1. `createPayPalOrder` (Callable)
+Crea una orden de pago en PayPal.
+
+**Parámetros:**
+```typescript
+{
+  items: Array<{
+    id: string;
+    name: string;
+    quantity: number;
+    price: number;
+  }>;
+  total: number;
+}
+```
+
+**Respuesta:**
+```typescript
+{
+  orderId: string;
+  paymentId: string;
+  approvalUrl: string;
+}
+```
+
+#### 2. `capturePayPal` (Callable)
+Captura/ejecuta un pago aprobado en PayPal.
+
+**Parámetros:**
+```typescript
+{
+  orderId: string;
+  paymentId: string;
+  payerId: string;
+}
+```
+
+**Respuesta:**
+```typescript
+{
+  orderId: string;
+  transactionId: string;
+  status: "completed" | "failed";
+}
+```
+
+#### 3. `getUserPayPalOrders` (Callable)
+Obtiene todas las órdenes de PayPal del usuario autenticado.
 
 ## 🔄 Flujo del ambiente
 
 ```
 DESARROLLO (Emulator)
-├─ sk_test_... (Secret Key de Stripe)
-└─ whsec_test_... (Webhook Secret)
+├─ Stripe: sk_test_...
+├─ Stripe Webhook: whsec_test_...
+├─ PayPal: Sandbox credentials
+└─ PayPal mode: "sandbox"
 
 PRODUCCIÓN (Cloud Functions)
-├─ sk_live_... (Secret Key de Stripe)
-└─ whsec_live_... (Webhook Secret)
+├─ Stripe: sk_live_...
+├─ Stripe Webhook: whsec_live_...
+├─ PayPal: Live credentials
+└─ PayPal mode: "live"
 ```
 
 Las funciones automáticamente detectan el entorno y usan las claves correctas.
@@ -86,48 +143,87 @@ firebase deploy --only functions
 
 Añade en Firebase Console → Configuración del runtime:
 
-**Producción:**
+**Stripe - Producción:**
 ```
-STRIPE_SECRET_KEY_PROD = sk_live_...
-STRIPE_WEBHOOK_SECRET_PROD = whsec_live_...
+STRIPE_SECRET_KEY_PROD=sk_live_...
+STRIPE_WEBHOOK_SECRET_PROD=whsec_live_...
 ```
 
-**Desarrollo (si no usas emulator):**
+**Stripe - Desarrollo (si no usas emulator):**
 ```
-STRIPE_SECRET_KEY_DEV = sk_test_...
-STRIPE_WEBHOOK_SECRET_DEV = whsec_test_...
+STRIPE_SECRET_KEY_DEV=sk_test_...
+STRIPE_WEBHOOK_SECRET_DEV=whsec_test_...
 ```
+
+**PayPal - Producción:**
+```
+PAYPAL_CLIENT_ID_PROD=...
+PAYPAL_CLIENT_SECRET_PROD=...
+```
+
+**PayPal - Desarrollo (Sandbox):**
+```
+PAYPAL_CLIENT_ID_DEV=...
+PAYPAL_CLIENT_SECRET_DEV=...
+```
+
+**URLs de retorno:**
+```
+RETURN_URL=https://tudominio.com/checkout
+CANCEL_URL=https://tudominio.com/checkout
+```
+
+Ver `.env.example` para más detalles.
 
 ## 📊 Estructura de datos en Firestore
 
-### Colección: `orders`
+### Colección: `orders` (Stripe)
 
-```
+```json
 {
-  id: string (document ID),
-  userId: string,
-  paymentIntentId: string,
-  amount: number,
-  currency: "eur",
-  status: "succeeded" | "failed" | "canceled" | "processing",
-  customerEmail: string,
-  createdAt: timestamp,
-  updatedAt: timestamp,
-  environment: "development" | "production",
-  paidAt?: timestamp,
-  failureReason?: string
+  "id": "string (document ID)",
+  "userId": "string",
+  "paymentIntentId": "string",
+  "amount": "number",
+  "currency": "eur",
+  "status": "succeeded | failed | canceled | processing",
+  "customerEmail": "string",
+  "createdAt": "timestamp",
+  "updatedAt": "timestamp",
+  "environment": "development | production",
+  "paidAt": "timestamp (opcional)",
+  "failureReason": "string (opcional)"
+}
+```
+
+### Colección: `paypal_orders` (PayPal)
+
+```json
+{
+  "id": "uuid",
+  "userId": "string",
+  "paypalPaymentId": "string",
+  "status": "created | completed",
+  "items": [{ "id", "name", "quantity", "price" }],
+  "total": "number",
+  "currency": "eur",
+  "paypalTransactionId": "string (después de captura)",
+  "createdAt": "timestamp",
+  "updatedAt": "timestamp"
 }
 ```
 
 ### Colección: `payment_errors` (para debugging)
 
-```
+```json
 {
-  userId: string,
-  error: string,
-  code: string,
-  createdAt: timestamp,
-  environment: "development" | "production"
+  "id": "auto-generated",
+  "type": "stripe_error | paypal_error",
+  "userId": "string",
+  "error": "string",
+  "code": "string (opcional)",
+  "createdAt": "timestamp",
+  "environment": "development | production"
 }
 ```
 
@@ -139,13 +235,19 @@ STRIPE_WEBHOOK_SECRET_DEV = whsec_test_...
 ✅ **Logs de auditoría** - Todas las transacciones se registran en Firestore
 ✅ **Webhooks verificados** - Stripe verifica la firma del webhook
 
-## 🧪 Testing con Stripe
+## 🧪 Testing con tarjetas
 
-Usa tarjetas de prueba en modo desarrollo:
+### Stripe
+
+Usa estas tarjetas en modo desarrollo:
 
 - ✅ Pago exitoso: `4242 4242 4242 4242`
 - ❌ Pago rechazado: `4000 0000 0000 0002`
 - ⚠️ Autenticación requerida: `4000 2500 0003 4010`
+
+### PayPal
+
+En Sandbox puedes usar cualquier email/contraseña. Ver [PAYPAL_SETUP.md](../PAYPAL_SETUP.md) para tarjetas de prueba.
 
 ## 📈 Monitoramiento
 
@@ -173,4 +275,7 @@ En Firebase Console:
 
 - [Firebase Functions Documentation](https://firebase.google.com/docs/functions)
 - [Stripe API Reference](https://stripe.com/docs/api)
+- [PayPal REST API](https://developer.paypal.com/docs/api/)
 - [Firestore Documentation](https://firebase.google.com/docs/firestore)
+- [STRIPE_SETUP.md](../STRIPE_SETUP.md) - Guía completa de Stripe
+- [PAYPAL_SETUP.md](../PAYPAL_SETUP.md) - Guía completa de PayPal

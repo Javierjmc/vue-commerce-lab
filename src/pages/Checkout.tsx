@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "@/hooks/useCart";
 import Navbar from "@/components/Navbar";
 import PaymentForm from "@/components/PaymentForm";
+import PayPalButton from "@/components/PayPalButton";
 import { StripeProvider } from "@/context/StripeProvider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft, CreditCard, Package } from "lucide-react";
 import { calculateCartTotal } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
 import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
@@ -18,6 +20,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { cart, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<"stripe" | "paypal">("stripe");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -168,16 +171,36 @@ const Checkout = () => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Información de pago (Stripe)</CardTitle>
+                  <CardTitle className="flex items-center gap-2">
+                    <CreditCard className="h-5 w-5" />
+                    Método de pago
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <StripeProvider>
-                    <PaymentForm 
-                      amount={finalTotal} 
-                      onSuccess={handlePaymentSuccess}
-                      isLoading={loading}
-                    />
-                  </StripeProvider>
+                  <Tabs value={paymentMethod} onValueChange={(value: any) => setPaymentMethod(value)}>
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="stripe">Stripe</TabsTrigger>
+                      <TabsTrigger value="paypal">PayPal</TabsTrigger>
+                    </TabsList>
+
+                    <TabsContent value="stripe" className="mt-4">
+                      <StripeProvider>
+                        <PaymentForm 
+                          amount={finalTotal} 
+                          onSuccess={handlePaymentSuccess}
+                          isLoading={loading}
+                        />
+                      </StripeProvider>
+                    </TabsContent>
+
+                    <TabsContent value="paypal" className="mt-4">
+                      <PayPalButton 
+                        amount={finalTotal} 
+                        onSuccess={handlePaymentSuccess}
+                        isLoading={loading}
+                      />
+                    </TabsContent>
+                  </Tabs>
                 </CardContent>
               </Card>
             </div>
