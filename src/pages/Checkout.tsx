@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/hooks/useCart";
 import Navbar from "@/components/Navbar";
+import PaymentForm from "@/components/PaymentForm";
+import { StripeProvider } from "@/context/StripeProvider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, CreditCard } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { calculateCartTotal } from "@/lib/cart";
 import { toast } from "@/hooks/use-toast";
 import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
@@ -16,26 +18,34 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { cart, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
 
   const total = calculateCartTotal(cart);
   const shipping = 10;
   const finalTotal = total + shipping;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    // Simular procesamiento de pago
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
+  const handlePaymentSuccess = (paymentIntentId: string) => {
+    console.log("Pago exitoso:", paymentIntentId);
+    
     toast({
       title: "¡Pedido confirmado!",
       description: "Tu pedido ha sido procesado exitosamente",
     });
 
+    // Aquí podrías guardar el pedido en Firestore con los detalles
     clearCart();
-    setLoading(false);
-    navigate("/");
+    
+    // Redirigir después de 2 segundos
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
   };
 
   if (cart.length === 0) {
@@ -61,7 +71,7 @@ const Checkout = () => {
           <div className="lg:col-span-2">
             <h1 className="mb-6 text-3xl font-bold">Finalizar compra</h1>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-6">
               <Card>
                 <CardHeader>
                   <CardTitle>Información de contacto</CardTitle>
@@ -70,20 +80,42 @@ const Checkout = () => {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">Nombre</Label>
-                      <Input id="firstName" required />
+                      <Input 
+                        id="firstName" 
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required 
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName">Apellido</Label>
-                      <Input id="lastName" required />
+                      <Input 
+                        id="lastName" 
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required 
+                      />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" required />
+                    <Input 
+                      id="email" 
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required 
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Teléfono</Label>
-                    <Input id="phone" type="tel" required />
+                    <Input 
+                      id="phone" 
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      required 
+                    />
                   </div>
                 </CardContent>
               </Card>
@@ -95,20 +127,40 @@ const Checkout = () => {
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="address">Dirección</Label>
-                    <Input id="address" required />
+                    <Input 
+                      id="address" 
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      required 
+                    />
                   </div>
                   <div className="grid gap-4 sm:grid-cols-3">
                     <div className="space-y-2">
                       <Label htmlFor="city">Ciudad</Label>
-                      <Input id="city" required />
+                      <Input 
+                        id="city" 
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        required 
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="state">Provincia</Label>
-                      <Input id="state" required />
+                      <Input 
+                        id="state" 
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                        required 
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="zip">Código Postal</Label>
-                      <Input id="zip" required />
+                      <Input 
+                        id="zip" 
+                        value={zip}
+                        onChange={(e) => setZip(e.target.value)}
+                        required 
+                      />
                     </div>
                   </div>
                 </CardContent>
@@ -116,38 +168,19 @@ const Checkout = () => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <CreditCard className="h-5 w-5" />
-                    Información de pago
-                  </CardTitle>
+                  <CardTitle>Información de pago (Stripe)</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="cardNumber">Número de tarjeta</Label>
-                    <Input id="cardNumber" placeholder="1234 5678 9012 3456" required />
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-3">
-                    <div className="space-y-2 sm:col-span-2">
-                      <Label htmlFor="expiry">Fecha de expiración</Label>
-                      <Input id="expiry" placeholder="MM/YY" required />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="cvv">CVV</Label>
-                      <Input id="cvv" placeholder="123" required />
-                    </div>
-                  </div>
+                <CardContent>
+                  <StripeProvider>
+                    <PaymentForm 
+                      amount={finalTotal} 
+                      onSuccess={handlePaymentSuccess}
+                      isLoading={loading}
+                    />
+                  </StripeProvider>
                 </CardContent>
               </Card>
-
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full"
-                disabled={loading}
-              >
-                {loading ? "Procesando..." : `Pagar $${finalTotal.toFixed(2)}`}
-              </Button>
-            </form>
+            </div>
           </div>
 
           <div>
