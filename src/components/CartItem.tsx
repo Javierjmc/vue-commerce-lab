@@ -102,10 +102,10 @@ const CartItem = ({ item, onRemove }: CartItemProps) => {
 
           <div className="text-right">
             <p className="text-lg font-bold text-primary">
-              ${(item.price * quantity).toFixed(2)}
+              €{(item.price * quantity).toFixed(2)}
             </p>
             <p className="text-xs text-muted-foreground">
-              ${item?.price?.toFixed(2)} c/u
+              €{item?.price?.toFixed(2)} c/u
             </p>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import {  
   Mail,
   Phone,
+  MessageCircle
 } from "lucide-react";
 
 import logoBlanco from "../assets/logo-blanco.png";
@@ -52,8 +53,8 @@ const Footer = () => {
               info@herbolariovitasfera.com
             </li>
             <li className="flex items-center gap-3">
-              <Phone className="h-4 w-4 text-accent" />
-              91 882 85 19
+              <MessageCircle className="h-4 w-4 text-accent" />
+              +34 696 40 65 72
             </li>
 
             <li>

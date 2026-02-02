@@ -209,7 +209,7 @@ export function ChatbotWidget() {
             </div>
             <div className="ml-auto flex items-center gap-2">
               <button
-                onClick={() => window.open("https://wa.me/XXXXXXXXXXX", "_blank")}
+                onClick={() => window.open("https://wa.me/+34696406572", "_blank")}
                 className="p-2 hover:bg-primary-foreground/10 rounded-full transition-colors"
                 aria-label="Contactar por WhatsApp"
               >

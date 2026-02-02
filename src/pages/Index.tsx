@@ -16,7 +16,7 @@ const Index = () => {
       cloudName: 'dax2r7ro2',
     },
   });
-  const video = cld.video("1_axql3b"); // Usar el publicId del video
+  const video = cld.video("BANNER_1_uoy9e6"); // Usar el publicId del video
 
   const VideoPlaceholder = (
     <AdvancedVideo

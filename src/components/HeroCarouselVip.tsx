@@ -4,13 +4,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { ChevronLeft, ChevronRight, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// Images
-import bannerRegalo from '@/assets/2.png';
-import bannerNovedades from '@/assets/3.png';
-import bannerCalidez from '@/assets/4.png';
-import bannerAnoNuevo from '@/assets/bg-hero-5.jpg';
-import bannerProductosNaturdix from '@/assets/bg-hero-6.png';
-
+// Tipado de las slides
 interface Slide {
   id: number;
   type: 'video' | 'image';
@@ -32,123 +26,129 @@ interface HeroCarouselProps {
   className?: string;
 }
 
-const slides: Slide[] = [  
-  { id: 1, type: 'image', src: bannerAnoNuevo, alt: 'Regalos especiales', overlay: { cta: { text: 'Descargar Agenda', href: '/https://recursos-gtc.vercel.app/assets/_Agenda%20Vitasfera%202026.pdf' } } },
-  { id: 2, type: 'image', src: bannerProductosNaturdix, alt: 'Nuevas novedades', overlay: { cta: { text: 'Explorar Productos', href: '/tienda' } } },
+// Datos de las slides (Podrías mover esto a un archivo de constantes)
+import bannerRegalo from '@/assets/2.png';
+import bannerProductosNaturdix from '@/assets/bg-hero-6.png';
 
+const slides: Slide[] = [  
+  { 
+    id: 1, 
+    type: 'video', 
+    src: "", 
+    alt: 'Regalos especiales para ti', 
+    overlay: { 
+      cta: { text: 'Descargar Agenda', href: 'https://recursos-gtc.vercel.app/assets/_Agenda%20Vitasfera%202026.pdf' } 
+    } 
+  },
+  { 
+    id: 2, 
+    type: 'image', 
+    src: bannerProductosNaturdix, 
+    alt: 'Nuevos productos Naturdix', 
+    overlay: { 
+      cta: { text: 'Explorar Productos', href: '/tienda' } 
+    } 
+  },
 ];
 
 const HeroCarouselVip: React.FC<HeroCarouselProps> = ({ videoComponent, className }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true },
+    { loop: true, skipSnaps: false },
     [Autoplay({ delay: 6000, stopOnInteraction: false, stopOnMouseEnter: true })]
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-  const [isHovered, setIsHovered] = useState(false);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
+  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
 
   useEffect(() => {
     if (!emblaApi) return;
+    onSelect();
     setScrollSnaps(emblaApi.scrollSnapList());
-    emblaApi.on('select', () => setSelectedIndex(emblaApi.selectedScrollSnap()));
-  }, [emblaApi]);
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+  }, [emblaApi, onSelect]);
 
   return (
-    <section
-      className={cn('relative w-full overflow-hidden', className)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <section 
+      className={cn('relative w-full overflow-hidden group', className)}
+      aria-label="Hero Carousel"
     >
-      {/* CAROUSEL */}
+      {/* CONTENEDOR EMBLA */}
       <div ref={emblaRef} className="overflow-hidden">
         <div className="flex">
           {slides.map((slide, index) => (
             <div
               key={slide.id}
-              className="
-                relative flex-[0_0_100%]
-                aspect-[13/4]
-                min-h-[320px]
-                md:min-h-[400px]
-                lg:min-h-[550px]
-              "
+              className="relative flex-[0_0_100%] min-w-0 w-full min-h-[350px] md:min-h-[450px] lg:min-h-[550px]"
             >
               {/* VIDEO SLIDE */}
               {slide.type === 'video' && videoComponent ? (
-                <>
-                  <div className="absolute inset-0">{videoComponent}</div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
-
-                  <div className="relative z-10 h-full flex items-center">
-                    <div className="container mx-auto px-6 text-center">
-                      <h1 className="text-4xl md:text-6xl font-black text-white">
-                        {slide.overlay?.title}
-                      </h1>
-                      <h1 className="text-4xl md:text-6xl font-black bg-white bg-clip-text text-transparent mb-4">
-                        {slide.overlay?.titleHighlight}
-                      </h1>
-                      <p className="text-lg md:text-xl text-white/90 mb-6 max-w-2xl mx-auto">
+                <div className="absolute inset-0 w-full h-full">
+                  <div className="absolute inset-0 z-0">{videoComponent}</div>
+                  <div className="absolute inset-0 bg-black/30 z-10" />
+                  
+                  <div className="relative z-20 h-full flex items-center justify-center text-center px-6">
+                    <div className="max-w-4xl">
+                      <h2 className="text-4xl md:text-6xl font-black text-white leading-tight">
+                        {slide.overlay?.title} <br />
+                        <span className="text-primary-foreground">{slide.overlay?.titleHighlight}</span>
+                      </h2>
+                      <p className="mt-4 text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
                         {slide.overlay?.subtitle}
                       </p>
-
                       {slide.overlay?.cta && (
-                        <a
-                          href={slide.overlay.cta.href}
-                          className="
-                            px-8 py-4 rounded-2xl text-white font-bold
-                            bg-gradient-to-r from-primary/80 to-primary
-                            hover:scale-105 transition-transform
-                          "
-                        >
-                          <ShoppingBag className="inline w-5 h-5 mr-2" />
-                          {slide.overlay.cta.text}
-                        </a>
+                        <div className="mt-8">
+                           <a
+                            href={slide.overlay.cta.href}
+                            className="inline-flex items-center px-8 py-4 rounded-xl text-white font-bold bg-primary hover:bg-primary/90 transition-all transform hover:scale-105 active:scale-95 shadow-lg"
+                          >
+                            <ShoppingBag className="w-5 h-5 mr-2" />
+                            {slide.overlay.cta.text}
+                          </a>
+                        </div>
                       )}
                     </div>
                   </div>
-                </>
+                </div>
               ) : (
                 /* IMAGE SLIDE */
-                <div className="absolute inset-0 overflow-hidden">
-                  {/* BLUR BACKGROUND */}
+                <div className="absolute inset-0 w-full h-full">
+                  {/* Fondo difuminado para evitar bordes vacíos en pantallas ultra-anchas */}
                   <img
                     src={slide.src}
-                    aria-hidden
-                    className="
-                      absolute inset-0 w-full h-full
-                      object-cover
-                      scale-110
-                      blur-2xl
-                      opacity-40
-                    "
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl opacity-30"
+                    aria-hidden="true"
                   />
-
-                  {/* MAIN IMAGE */}
-                  <div className="relative z-10 w-full h-full flex items-center justify-center">
+                  
+                  {/* Imagen Principal */}
+                  <div className="relative h-full w-full flex items-center justify-center">
                     <img
                       src={slide.src}
-                      alt={slide.alt}
-                      className="w-full h-full object-cover max-w-[1400px]"
+                      alt={slide.alt || 'Banner imagen'}
+                      className="w-full h-full object-cover"
                       loading={index === 0 ? 'eager' : 'lazy'}
                     />
 
-                    {/* BUTTON OVER IMAGE */}
+                    {/* Botón sobre la imagen */}
                     {slide.overlay?.cta && (
-                      <div className="absolute bottom-8 w-full flex justify-center z-20">
+                      <div className="absolute bottom-10 left-0 w-full flex justify-center px-4">
                         <a
                           href={slide.overlay.cta.href}
-                          className="
-                            px-8 py-4 rounded-2xl text-white font-bold
-                            bg-gradient-to-r from-primary/70 to-primary
-                            hover:scale-105 transition-transform
-                          "
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center px-10 py-4 rounded-full text-white font-bold bg-gradient-to-r from-primary to-emerald-500 hover:from-primary hover:to-emerald-400 transition-all shadow-lg shadow-white transform hover:-translate-y-1"
                         >
-                          <ShoppingBag className="inline w-5 h-5 mr-2" />
+                          <ShoppingBag className="w-5 h-5 mr-2" />
                           {slide.overlay.cta.text}
                         </a>
                       </div>
@@ -161,41 +161,34 @@ const HeroCarouselVip: React.FC<HeroCarouselProps> = ({ videoComponent, classNam
         </div>
       </div>
 
-      {/* NAVIGATION */}
+      {/* NAVEGACIÓN (Solo visible en Hover en desktop) */}
       <button
         onClick={scrollPrev}
-        className={cn(
-          'absolute left-6 top-1/2 -translate-y-1/2 z-20',
-          'w-12 h-12 rounded-xl glass text-white flex items-center justify-center',
-          'transition-opacity',
-          isHovered ? 'opacity-100' : 'opacity-0'
-        )}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/80 hover:bg-white text-emerald-900 flex items-center justify-center shadow-md transition-opacity opacity-0 group-hover:opacity-100 hidden md:flex"
+        aria-label="Anterior slide"
       >
-        <ChevronLeft />
+        <ChevronLeft size={24} />
       </button>
 
       <button
         onClick={scrollNext}
-        className={cn(
-          'absolute right-6 top-1/2 -translate-y-1/2 z-20',
-          'w-12 h-12 rounded-xl glass text-white flex items-center justify-center',
-          'transition-opacity',
-          isHovered ? 'opacity-100' : 'opacity-0'
-        )}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/80 hover:bg-white text-emerald-900 flex items-center justify-center shadow-md transition-opacity opacity-0 group-hover:opacity-100 hidden md:flex"
+        aria-label="Siguiente slide"
       >
-        <ChevronRight />
+        <ChevronRight size={24} />
       </button>
 
-      {/* INDICATORS */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      {/* INDICADORES (Dots) */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-3">
         {scrollSnaps.map((_, i) => (
           <button
             key={i}
             onClick={() => scrollTo(i)}
             className={cn(
-              'w-2 h-2 rounded-full transition-all',
-              selectedIndex === i ? 'bg-white scale-100' : 'bg-white/40 scale-75'
+              'h-2.5 rounded-full transition-all duration-300',
+              selectedIndex === i ? 'bg-white w-8' : 'bg-white/50 w-2.5 hover:bg-white/80'
             )}
+            aria-label={`Ir a slide ${i + 1}`}
           />
         ))}
       </div>

@@ -219,7 +219,7 @@ const Checkout = () => {
                         {item.name} x{item.quantity}
                       </span>
                       <span className="font-semibold">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        €{(item.price * item.quantity).toFixed(2)}
                       </span>
                     </div>
                   ))}
@@ -227,16 +227,16 @@ const Checkout = () => {
                 <Separator />
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span className="font-semibold">${total.toFixed(2)}</span>
+                  <span className="font-semibold">€{total.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Envío</span>
-                  <span className="font-semibold">${shipping.toFixed(2)}</span>
+                  <span className="font-semibold">€{shipping.toFixed(2)}</span>
                 </div>
                 <Separator />
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span className="text-primary">${finalTotal.toFixed(2)}</span>
+                  <span className="text-primary">€{finalTotal.toFixed(2)}</span>
                 </div>
               </CardContent>
             </Card>

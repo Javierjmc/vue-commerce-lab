@@ -24,7 +24,7 @@ const Navbar = () => {
     { name: "Nuestro Equipo", to: "/nuestro-equipo" },
     { name: "Testimonios", to: "/testimonios" },
     { name: "Tienda", to: "/tienda" },
-    { name: "Blog", to: "/blog" },
+    // { name: "Blog", to: "/blog" },
     { name: "Contacto", to: "/contacto" },
   ];
 
