@@ -26,6 +26,7 @@ const Navbar = () => {
     { name: "Tienda", to: "/tienda" },
     // { name: "Blog", to: "/blog" },
     { name: "Contacto", to: "/contacto" },
+    // { name: "Blog", to: "/blog" },
   ];
 
   return (
@@ -35,33 +36,35 @@ const Navbar = () => {
       <div className="text-center text-sm text-primary font-bold bg-primary text-primary-foreground py-3">Envío gratis +60€</div>
 
       
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 w-full">
         
         {/* ========================================================= */}
         {/* FILA SUPERIOR: Búsqueda Avanzada + Iconos (Login/Carrito) */}
         {/* ========================================================= */}
-        <div className="flex items-center justify-between h-14 md:h-16 py-2 border-b border-border/50 transition-all duration-300">
+        <div className="flex items-center justify-between min-h-[80px] md:min-h-[100px] py-4 md:py-6 px-2 md:px-4 border-b border-border/50 transition-all duration-300">
           
-          {/* Búsqueda Avanzada (Desktop/Tablet) */}
-          <div className="hidden md:flex flex-1 mx-auto items-center">
+          {/* Búsqueda Avanzada (Desktop/Tablet) - Con más espacio y separación */}
+          <div className="hidden md:flex flex-1 items-center justify-center w-full mx-auto px-4 md:px-8">
              <AdvancedSearchBar />              
           </div>
           
-          {/* Iconos: Carrito + Login */}
-          <div className="flex items-center gap-2 md:gap-4 ml-auto">
+          {/* Iconos: Carrito + Login - Con más separación */}
+          <div className="flex items-center gap-3 md:gap-5 ml-4 md:ml-6">
             
             {/* Menú de Usuario */}
-            <UserMenu />
+            <div className="flex-shrink-0">
+              <UserMenu />
+            </div>
 
-            {/* Icono de Carrito */}
+            {/* Icono de Carrito - Mejorado */}
             <Link
               to="/cart"
               aria-label={`Carrito de compras con ${itemCount} artículos`}
-              className="relative p-2 md:p-3 rounded-full transition-all duration-300 hover:bg-muted hover:text-primary transform hover:scale-105"
+              className="relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl transition-all duration-300 hover:bg-gradient-to-br hover:from-primary/10 hover:to-primary/5 hover:text-primary transform hover:scale-105 active:scale-95 border border-transparent hover:border-primary/20"
             >
               <ShoppingCart className="h-5 w-5 md:h-6 md:w-6" />
               {itemCount > 0 && (
-                <Badge className="absolute -right-1 -top-1 md:-right-0 md:-top-0 flex h-5 w-5 items-center justify-center rounded-full p-0 text-xs font-bold bg-primary text-primary-foreground border-2 border-background shadow-lg animate-ping-once">
+                <Badge className="absolute -right-1 -top-1 md:-right-0 md:-top-0 flex h-5 w-5 md:h-6 md:w-6 items-center justify-center rounded-full p-0 text-xs font-bold bg-gradient-to-br from-primary to-primary/80 text-primary-foreground border-2 border-background shadow-lg animate-pulse-soft">
                   {itemCount > 9 ? '9+' : itemCount}
                 </Badge>
               )}
@@ -69,7 +72,7 @@ const Navbar = () => {
             
             {/* Botón de menú móvil/hamburguesa */}
             <button
-              className="md:hidden p-2 rounded-full text-foreground/80 hover:bg-muted hover:text-primary transition-colors duration-200"
+              className="md:hidden p-2.5 rounded-xl text-foreground/80 hover:bg-muted hover:text-primary transition-all duration-200 border border-transparent hover:border-primary/20"
               onClick={() => setOpen(!open)}
               aria-label={open ? "Cerrar menú" : "Abrir menú"}
             >
@@ -116,8 +119,8 @@ const Navbar = () => {
         <div className="md:hidden bg-background border-t border-border absolute w-full animate-in slide-in-from-top-4 duration-500 shadow-2xl">
           <div className="flex flex-col py-6 px-6 sm:px-10 gap-3">
             
-            {/* Búsqueda móvil - Prioridad alta */}
-            <div className="mb-4">
+            {/* Búsqueda móvil - Prioridad alta con mejor espaciado */}
+            <div className="mb-6 px-2">
               <AdvancedSearchBar onSearchSubmit={() => setOpen(false)} />
             </div>
 

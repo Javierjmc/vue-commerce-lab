@@ -2,8 +2,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
-import team2 from "@/assets/sandra.png";
-import team1 from "@/assets/laura.png";
+import sandra from "@/assets/sandra 2.webp";
+import laura from "@/assets/LAURA.webp";
 
 export default function TeamSection() {
 
@@ -11,7 +11,7 @@ export default function TeamSection() {
         {
           name: "Sandra",
           role: "Nutricionista Principal",
-          image: team1,
+          image: sandra,
           bio: "Hola, soy Sandra, naturópata, y mi misión es acompañarte en tu viaje personal hacia la salud y el bienestar.",
           fullDescription: "Hola, soy Sandra, naturópata, y mi misión es acompañarte en tu viaje personal hacia la salud y el bienestar. Utilizo la kinesiología y las Flores de Bach para ayudarte a conectar con tu cuerpo y a manejar el estrés y la ansiedad. Con un enfoque en la nutrición naturista, te enseño a usar los alimentos como medicina, fortaleciendo tu cuerpo de forma inteligente. Mi objetivo es que te sientas mejor, más fuerte y en control de tu bienestar. Si estás listo para empezar, estoy aquí para guiarte en cada paso.",
           certificaciones: ["Máster en Nutrición Holística", "Certificación en Fitoterapia", "Especialista en Microbiota Intestinal"],
@@ -20,7 +20,7 @@ export default function TeamSection() {
         {
           name: "Laura",
           role: "Coach de Bienestar",
-          image: team2,
+          image: laura,
           bio: "Hola, soy Laura. Mi misión es guiarte hacia una vida de equilibrio y felicidad, cuidando tu cuerpo y mente desde la raíz.",
           fullDescription: "Hola, soy Laura. Mi misión es guiarte hacia una vida de equilibrio y felicidad, cuidando tu cuerpo y mente desde la raíz. Logramos esta transformación con un enfoque integral, combinando el poder de la herbodietética y la nutricosmética. Utilizo los mejores ingredientes naturales para crear un plan 100% personalizado que se adapte a tus necesidades. Veo la evolución de mis clientes, cómo recuperan su bienestar, aumentan su confianza y logran sus objetivos, es mi mayor recompensa. Es un privilegio ser parte de su proceso. Te invito a iniciar tu camino hacia una vida más sana y auténtica.",
           certificaciones: ["Coach de Salud Certificada", "Técnico Superior en Dietética", "Especialista en Mindfulness y Reducción del Estrés"],
@@ -57,7 +57,7 @@ export default function TeamSection() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-72 md:h-96 object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-72 md:h-[600px] object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-500"></div>
                 </div>

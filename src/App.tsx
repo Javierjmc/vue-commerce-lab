@@ -23,6 +23,7 @@ import Naturdix from './pages/Naturdix';
 import Tienda from "./pages/Tienda";
 import Dashboard from './pages/Dashboard';
 
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/naturdix" element={<Naturdix />} />
           <Route path="/dashboard" element={<Dashboard />} /> {/* Ruta del Dashboard */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/blog" element={<Blog />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
     </TooltipProvider>

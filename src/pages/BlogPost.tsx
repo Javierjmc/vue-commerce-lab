@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Clock, Calendar, User, Share2, Bookmark } from "lucide-react";
-import { blogPosts } from "@/lib/blogPosts.ts";
+import { blogPosts, getBlogContent } from "@/lib/blogPosts.ts";
 import { BlogCard, BlogCategory } from "@/components/blog/BlogCard";
 import { NewsletterCTA } from "@/components/blog/NewsletterCTA";
 
@@ -16,65 +16,7 @@ const categoryStyles: Record<BlogCategory, string> = {
   bienestar: "category-badge-wellness",
 };
 
-// Sample article content - in production this would come from a CMS or database
-const articleContent = `
-## Introducción
-
-La alimentación consciente es mucho más que una tendencia pasajera. Es un enfoque holístico hacia la nutrición que puede transformar completamente tu relación con la comida y tu bienestar general.
-
-En este artículo, exploraremos los principios fundamentales de una alimentación natural y cómo puedes incorporarlos fácilmente en tu vida diaria.
-
-## Los Beneficios de los Ingredientes Naturales
-
-Los ingredientes naturales y orgánicos ofrecen una serie de beneficios que van más allá de la simple nutrición:
-
-- **Mayor densidad nutricional**: Los alimentos cultivados de forma natural suelen contener más vitaminas y minerales.
-- **Menos químicos**: Al evitar pesticidas y aditivos, reduces la carga tóxica en tu cuerpo.
-- **Mejor sabor**: Los ingredientes frescos y de temporada simplemente saben mejor.
-- **Sostenibilidad**: Apoyas prácticas agrícolas que respetan el medio ambiente.
-
-## Consejos Prácticos
-
-### 1. Empieza por lo básico
-
-No necesitas cambiar toda tu dieta de un día para otro. Comienza incorporando más frutas y verduras frescas en tus comidas diarias.
-
-### 2. Lee las etiquetas
-
-Aprende a identificar ingredientes artificiales y opta por productos con listas de ingredientes cortas y reconocibles.
-
-### 3. Cocina en casa
-
-Preparar tus propias comidas te da control total sobre lo que consumes y es una forma maravillosa de conectar con los alimentos.
-
-### 4. Compra local
-
-Los mercados locales suelen ofrecer productos más frescos y de mejor calidad que las grandes cadenas de supermercados.
-
-## Receta del Día
-
-Para poner en práctica estos principios, te compartimos una receta sencilla pero deliciosa que puedes preparar hoy mismo.
-
-**Ingredientes:**
-- 2 tazas de espinacas frescas
-- 1 aguacate maduro
-- 1/2 taza de quinoa cocida
-- Jugo de 1 limón
-- Aceite de oliva extra virgen
-- Sal marina al gusto
-
-**Preparación:**
-1. Lava bien las espinacas y colócalas en un bowl.
-2. Añade la quinoa y el aguacate cortado en cubos.
-3. Mezcla el jugo de limón con el aceite de oliva.
-4. Aliña la ensalada y sazona con sal marina.
-
-## Conclusión
-
-Adoptar una alimentación más natural es un viaje, no un destino. Cada pequeño cambio que hagas suma y contribuye a tu bienestar general. Recuerda que lo importante es el progreso, no la perfección.
-
-En Vitasfera, estamos comprometidos a acompañarte en este camino hacia una vida más saludable y consciente. Explora nuestra tienda para descubrir productos naturales que pueden complementar tu alimentación.
-`;
+// El contenido del artículo se carga dinámicamente desde blogPosts.ts
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
@@ -96,6 +38,9 @@ const BlogPost = () => {
   const relatedPosts = blogPosts
     .filter((p) => p.id !== post.id && p.category === post.category)
     .slice(0, 3);
+
+  // Obtener el contenido del artículo
+  const articleContent = getBlogContent(post.id);
 
   return (
     <main className="min-h-screen bg-background">

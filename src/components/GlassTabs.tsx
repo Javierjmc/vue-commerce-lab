@@ -64,7 +64,7 @@ export function GlassTabs() {
       </div>
 
       {/* Tab Content */}
-      <div className="rounded-xl bg-white shadow-md px-6 min-h-[200px]">
+      <div className="rounded-xl bg-white shadow-md px-6 min-h-[500px]">
         {tabs.map((tab) => (
           <div
             key={tab.id}

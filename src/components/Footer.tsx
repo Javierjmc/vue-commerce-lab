@@ -54,7 +54,7 @@ const Footer = () => {
             </li>
             <li className="flex items-center gap-3">
               <MessageCircle className="h-4 w-4 text-accent" />
-              +34 696 40 65 72
+              +34 620 74 83 81
             </li>
 
             <li>

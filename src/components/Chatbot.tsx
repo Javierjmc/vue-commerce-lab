@@ -95,7 +95,7 @@ const Chatbot: React.FC = () => {
             variant="ghost"
             size="icon"
             className="text-primary-foreground hover:bg-primary/80"
-            onClick={() => window.open("https://wa.me/XXXXXXXXXXX", "_blank")}
+            onClick={() => window.open("https://wa.me/+34620748381", "_blank")}
           >
               <Phone className="h-5 w-5" />
           </Button>
